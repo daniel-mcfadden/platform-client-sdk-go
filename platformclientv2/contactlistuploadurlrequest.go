@@ -37,6 +37,15 @@ type Contactlistuploadurlrequest struct {
 
 	// FileSpecificationTemplateId - File specification template ID
 	FileSpecificationTemplateId *string `json:"fileSpecificationTemplateId,omitempty"`
+
+	// RetentionTypeColumn - The column name from your file to get retention type values from.
+	RetentionTypeColumn *string `json:"retentionTypeColumn,omitempty"`
+
+	// RetentionDaysColumn - The column name from your file to get retention day values from.
+	RetentionDaysColumn *string `json:"retentionDaysColumn,omitempty"`
+
+	// RetentionDateExpirationColumn - The column name from your file to get date expiration values from.
+	RetentionDateExpirationColumn *string `json:"retentionDateExpirationColumn,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -119,6 +128,12 @@ func (o Contactlistuploadurlrequest) MarshalJSON() ([]byte, error) {
 		DivisionIdForTargetContactLists *string `json:"divisionIdForTargetContactLists,omitempty"`
 		
 		FileSpecificationTemplateId *string `json:"fileSpecificationTemplateId,omitempty"`
+		
+		RetentionTypeColumn *string `json:"retentionTypeColumn,omitempty"`
+		
+		RetentionDaysColumn *string `json:"retentionDaysColumn,omitempty"`
+		
+		RetentionDateExpirationColumn *string `json:"retentionDateExpirationColumn,omitempty"`
 		Alias
 	}{ 
 		SignedUrlTimeoutSeconds: o.SignedUrlTimeoutSeconds,
@@ -138,6 +153,12 @@ func (o Contactlistuploadurlrequest) MarshalJSON() ([]byte, error) {
 		DivisionIdForTargetContactLists: o.DivisionIdForTargetContactLists,
 		
 		FileSpecificationTemplateId: o.FileSpecificationTemplateId,
+		
+		RetentionTypeColumn: o.RetentionTypeColumn,
+		
+		RetentionDaysColumn: o.RetentionDaysColumn,
+		
+		RetentionDateExpirationColumn: o.RetentionDateExpirationColumn,
 		Alias:    (Alias)(o),
 	})
 }
@@ -184,6 +205,18 @@ func (o *Contactlistuploadurlrequest) UnmarshalJSON(b []byte) error {
     
 	if FileSpecificationTemplateId, ok := ContactlistuploadurlrequestMap["fileSpecificationTemplateId"].(string); ok {
 		o.FileSpecificationTemplateId = &FileSpecificationTemplateId
+	}
+    
+	if RetentionTypeColumn, ok := ContactlistuploadurlrequestMap["retentionTypeColumn"].(string); ok {
+		o.RetentionTypeColumn = &RetentionTypeColumn
+	}
+    
+	if RetentionDaysColumn, ok := ContactlistuploadurlrequestMap["retentionDaysColumn"].(string); ok {
+		o.RetentionDaysColumn = &RetentionDaysColumn
+	}
+    
+	if RetentionDateExpirationColumn, ok := ContactlistuploadurlrequestMap["retentionDateExpirationColumn"].(string); ok {
+		o.RetentionDateExpirationColumn = &RetentionDateExpirationColumn
 	}
     
 

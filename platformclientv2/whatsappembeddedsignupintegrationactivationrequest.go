@@ -17,7 +17,7 @@ type Whatsappembeddedsignupintegrationactivationrequest struct {
 	// Name - WhatsApp Integration name
 	Name *string `json:"name,omitempty"`
 
-	// PhoneNumber - Phone number to associate with the WhatsApp integration
+	// PhoneNumber - E.164 phone number to associate with the WhatsApp integration. Not required for embedded signup v4 or later.
 	PhoneNumber *string `json:"phoneNumber,omitempty"`
 
 	// Pin - Specify the two-step verification PIN for that phone number

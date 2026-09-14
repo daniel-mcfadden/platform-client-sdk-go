@@ -13,6 +13,9 @@ type Checklistfinalizepayload struct {
 	SetFieldNames map[string]bool `json:"-"`
 	// ExitReason - Exit reason provided at the time of finalizing the checklist.
 	ExitReason *string `json:"exitReason,omitempty"`
+
+	// Preview - Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.
+	Preview *bool `json:"preview,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -79,9 +82,13 @@ func (o Checklistfinalizepayload) MarshalJSON() ([]byte, error) {
 	
 	return json.Marshal(&struct { 
 		ExitReason *string `json:"exitReason,omitempty"`
+		
+		Preview *bool `json:"preview,omitempty"`
 		Alias
 	}{ 
 		ExitReason: o.ExitReason,
+		
+		Preview: o.Preview,
 		Alias:    (Alias)(o),
 	})
 }
@@ -95,6 +102,10 @@ func (o *Checklistfinalizepayload) UnmarshalJSON(b []byte) error {
 	
 	if ExitReason, ok := ChecklistfinalizepayloadMap["exitReason"].(string); ok {
 		o.ExitReason = &ExitReason
+	}
+    
+	if Preview, ok := ChecklistfinalizepayloadMap["preview"].(bool); ok {
+		o.Preview = &Preview
 	}
     
 

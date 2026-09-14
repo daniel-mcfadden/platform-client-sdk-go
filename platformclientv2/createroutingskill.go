@@ -13,6 +13,9 @@ type Createroutingskill struct {
 	SetFieldNames map[string]bool `json:"-"`
 	// Name - The name of the skill.
 	Name *string `json:"name,omitempty"`
+
+	// DivisionId - The division to which this skill will belong
+	DivisionId *string `json:"divisionId,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -79,9 +82,13 @@ func (o Createroutingskill) MarshalJSON() ([]byte, error) {
 	
 	return json.Marshal(&struct { 
 		Name *string `json:"name,omitempty"`
+		
+		DivisionId *string `json:"divisionId,omitempty"`
 		Alias
 	}{ 
 		Name: o.Name,
+		
+		DivisionId: o.DivisionId,
 		Alias:    (Alias)(o),
 	})
 }
@@ -95,6 +102,10 @@ func (o *Createroutingskill) UnmarshalJSON(b []byte) error {
 	
 	if Name, ok := CreateroutingskillMap["name"].(string); ok {
 		o.Name = &Name
+	}
+    
+	if DivisionId, ok := CreateroutingskillMap["divisionId"].(string); ok {
+		o.DivisionId = &DivisionId
 	}
     
 

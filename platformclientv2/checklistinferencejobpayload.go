@@ -13,6 +13,9 @@ type Checklistinferencejobpayload struct {
 	SetFieldNames map[string]bool `json:"-"`
 	// ConversationContext - List of conversations on which checklist evaluation is to be done.
 	ConversationContext *[]Conversationcontext `json:"conversationContext,omitempty"`
+
+	// Preview - Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.
+	Preview *bool `json:"preview,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -79,9 +82,13 @@ func (o Checklistinferencejobpayload) MarshalJSON() ([]byte, error) {
 	
 	return json.Marshal(&struct { 
 		ConversationContext *[]Conversationcontext `json:"conversationContext,omitempty"`
+		
+		Preview *bool `json:"preview,omitempty"`
 		Alias
 	}{ 
 		ConversationContext: o.ConversationContext,
+		
+		Preview: o.Preview,
 		Alias:    (Alias)(o),
 	})
 }
@@ -98,6 +105,10 @@ func (o *Checklistinferencejobpayload) UnmarshalJSON(b []byte) error {
 		json.Unmarshal(ConversationContextString, &o.ConversationContext)
 	}
 	
+	if Preview, ok := ChecklistinferencejobpayloadMap["preview"].(bool); ok {
+		o.Preview = &Preview
+	}
+    
 
 	return nil
 }

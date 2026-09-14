@@ -51,6 +51,9 @@ type Agentchecklistresponse struct {
 	// Direction - Direction of the conversation.
 	Direction *string `json:"direction,omitempty"`
 
+	// Preview - Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.
+	Preview *bool `json:"preview,omitempty"`
+
 	// EvaluationStartDate - Date when the checklist evaluation began. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z
 	EvaluationStartDate *time.Time `json:"evaluationStartDate,omitempty"`
 
@@ -197,6 +200,8 @@ func (o Agentchecklistresponse) MarshalJSON() ([]byte, error) {
 		
 		Direction *string `json:"direction,omitempty"`
 		
+		Preview *bool `json:"preview,omitempty"`
+		
 		EvaluationStartDate *string `json:"evaluationStartDate,omitempty"`
 		
 		EvaluationLastModifiedDate *string `json:"evaluationLastModifiedDate,omitempty"`
@@ -239,6 +244,8 @@ func (o Agentchecklistresponse) MarshalJSON() ([]byte, error) {
 		MediaType: o.MediaType,
 		
 		Direction: o.Direction,
+		
+		Preview: o.Preview,
 		
 		EvaluationStartDate: EvaluationStartDate,
 		
@@ -318,6 +325,10 @@ func (o *Agentchecklistresponse) UnmarshalJSON(b []byte) error {
     
 	if Direction, ok := AgentchecklistresponseMap["direction"].(string); ok {
 		o.Direction = &Direction
+	}
+    
+	if Preview, ok := AgentchecklistresponseMap["preview"].(bool); ok {
+		o.Preview = &Preview
 	}
     
 	if evaluationStartDateString, ok := AgentchecklistresponseMap["evaluationStartDate"].(string); ok {

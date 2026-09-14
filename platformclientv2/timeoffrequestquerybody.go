@@ -14,7 +14,7 @@ type Timeoffrequestquerybody struct {
 	// Ids - The set of ids to filter time off requests
 	Ids *[]string `json:"ids,omitempty"`
 
-	// UserIds - The set of user ids to filter time off requests
+	// UserIds - The set of user ids to filter time off requests. Omit to query all users in the management unit. Note: If teamIds is also specified, only time off requests for users in the requested teams will be returned
 	UserIds *[]string `json:"userIds,omitempty"`
 
 	// Statuses - The set of statuses to filter time off requests
@@ -25,6 +25,9 @@ type Timeoffrequestquerybody struct {
 
 	// DateRange - The inclusive range of dates to filter time off requests
 	DateRange *Daterange `json:"dateRange,omitempty"`
+
+	// TeamIds - The IDs of work teams to query. If null or not set, results will be queried for requested users if applicable or otherwise all users in the management unit
+	TeamIds *[]string `json:"teamIds,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -99,6 +102,8 @@ func (o Timeoffrequestquerybody) MarshalJSON() ([]byte, error) {
 		Substatuses *[]string `json:"substatuses,omitempty"`
 		
 		DateRange *Daterange `json:"dateRange,omitempty"`
+		
+		TeamIds *[]string `json:"teamIds,omitempty"`
 		Alias
 	}{ 
 		Ids: o.Ids,
@@ -110,6 +115,8 @@ func (o Timeoffrequestquerybody) MarshalJSON() ([]byte, error) {
 		Substatuses: o.Substatuses,
 		
 		DateRange: o.DateRange,
+		
+		TeamIds: o.TeamIds,
 		Alias:    (Alias)(o),
 	})
 }
@@ -144,6 +151,11 @@ func (o *Timeoffrequestquerybody) UnmarshalJSON(b []byte) error {
 	if DateRange, ok := TimeoffrequestquerybodyMap["dateRange"].(map[string]interface{}); ok {
 		DateRangeString, _ := json.Marshal(DateRange)
 		json.Unmarshal(DateRangeString, &o.DateRange)
+	}
+	
+	if TeamIds, ok := TimeoffrequestquerybodyMap["teamIds"].([]interface{}); ok {
+		TeamIdsString, _ := json.Marshal(TeamIds)
+		json.Unmarshal(TeamIdsString, &o.TeamIds)
 	}
 	
 

@@ -17,6 +17,9 @@ type Prompt struct {
 	// Name - The prompt name.
 	Name *string `json:"name,omitempty"`
 
+	// Division - The division to which this entity belongs.
+	Division *Writablestarrabledivision `json:"division,omitempty"`
+
 	// Description
 	Description *string `json:"description,omitempty"`
 
@@ -97,6 +100,8 @@ func (o Prompt) MarshalJSON() ([]byte, error) {
 		
 		Name *string `json:"name,omitempty"`
 		
+		Division *Writablestarrabledivision `json:"division,omitempty"`
+		
 		Description *string `json:"description,omitempty"`
 		
 		Resources *[]Promptasset `json:"resources,omitempty"`
@@ -109,6 +114,8 @@ func (o Prompt) MarshalJSON() ([]byte, error) {
 		Id: o.Id,
 		
 		Name: o.Name,
+		
+		Division: o.Division,
 		
 		Description: o.Description,
 		
@@ -136,6 +143,11 @@ func (o *Prompt) UnmarshalJSON(b []byte) error {
 		o.Name = &Name
 	}
     
+	if Division, ok := PromptMap["division"].(map[string]interface{}); ok {
+		DivisionString, _ := json.Marshal(Division)
+		json.Unmarshal(DivisionString, &o.Division)
+	}
+	
 	if Description, ok := PromptMap["description"].(string); ok {
 		o.Description = &Description
 	}

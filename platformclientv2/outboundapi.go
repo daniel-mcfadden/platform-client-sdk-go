@@ -5067,7 +5067,7 @@ func (a OutboundApi) GetOutboundContactlistfilters(pageSize int, pageNumber int,
 // Query a list of contact lists.
 //
 // Any ContactList field can be used as a query parameter to filter results. Multiple values can be specified for a field, and filter type prefixes can be used inline. Example: dateCreated&#x3D;greaterthan:2025-01-01T00:00:00.000Z&amp;dateCreated&#x3D;lessthan:2027-01-01T00:00:00.000Z. See https://developer.genesys.cloud/routing/outbound/filter-type for available filter types.
-func (a OutboundApi) GetOutboundContactlists(includeImportStatus bool, includeSize bool, pageSize int, pageNumber int, allowEmptyResult bool, filterType string, name string, id []string, divisionId []string, sortBy string, sortOrder string) (*Contactlistentitylisting, *APIResponse, error) {
+func (a OutboundApi) GetOutboundContactlists(includeImportStatus bool, includeSize bool, pageSize int, pageNumber int, allowEmptyResult bool, filterType string, name string, id []string, divisionId []string, timeZone string, dateExpiration []string, sortBy string, sortOrder string) (*Contactlistentitylisting, *APIResponse, error) {
 	var httpMethod = "GET"
 	// create path and map variables
 	path := a.Configuration.BasePath + "/api/v2/outbound/contactlists"
@@ -5111,6 +5111,10 @@ func (a OutboundApi) GetOutboundContactlists(includeImportStatus bool, includeSi
 	queryParams["id"] = a.Configuration.APIClient.ParameterToString(id, "multi")
 	
 	queryParams["divisionId"] = a.Configuration.APIClient.ParameterToString(divisionId, "multi")
+	
+	queryParams["timeZone"] = a.Configuration.APIClient.ParameterToString(timeZone, "")
+	
+	queryParams["dateExpiration"] = a.Configuration.APIClient.ParameterToString(dateExpiration, "multi")
 	
 	queryParams["sortBy"] = a.Configuration.APIClient.ParameterToString(sortBy, "")
 	
@@ -5431,7 +5435,7 @@ func (a OutboundApi) GetOutboundContactlisttemplate(contactListTemplateId string
 // GetOutboundContactlisttemplates invokes GET /api/v2/outbound/contactlisttemplates
 //
 // Query a list of contact list templates
-func (a OutboundApi) GetOutboundContactlisttemplates(pageSize int, pageNumber int, allowEmptyResult bool, filterType string, name string, sortBy string, sortOrder string) (*Contactlisttemplateentitylisting, *APIResponse, error) {
+func (a OutboundApi) GetOutboundContactlisttemplates(pageSize int, pageNumber int, allowEmptyResult bool, filterType string, name string, timeZone string, sortBy string, sortOrder string) (*Contactlisttemplateentitylisting, *APIResponse, error) {
 	var httpMethod = "GET"
 	// create path and map variables
 	path := a.Configuration.BasePath + "/api/v2/outbound/contactlisttemplates"
@@ -5467,6 +5471,8 @@ func (a OutboundApi) GetOutboundContactlisttemplates(pageSize int, pageNumber in
 	queryParams["filterType"] = a.Configuration.APIClient.ParameterToString(filterType, "")
 	
 	queryParams["name"] = a.Configuration.APIClient.ParameterToString(name, "")
+	
+	queryParams["timeZone"] = a.Configuration.APIClient.ParameterToString(timeZone, "")
 	
 	queryParams["sortBy"] = a.Configuration.APIClient.ParameterToString(sortBy, "")
 	
@@ -11104,6 +11110,92 @@ func (a OutboundApi) PostOutboundContactlists(body Contactlist) (*Contactlist, *
 		err = errors.New(response.ErrorMessage)
 	} else if response.HasBody {
 		if "Contactlist" == "string" {
+			copy(response.RawBody, &successPayload)
+		} else {
+			err = json.Unmarshal(response.RawBody, &successPayload)
+		}
+	}
+	return successPayload, response, err
+}
+
+// PostOutboundContactlistsBulkUpdate invokes POST /api/v2/outbound/contactlists/bulk/update
+//
+// Bulk update contact lists.
+//
+// A maximum of 100 contact lists can be updated per request.
+func (a OutboundApi) PostOutboundContactlistsBulkUpdate(body Contactlistsbulkeditrequest) (*Contactlistsbulkeditresponse, *APIResponse, error) {
+	var httpMethod = "POST"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/api/v2/outbound/contactlists/bulk/update"
+	defaultReturn := new(Contactlistsbulkeditresponse)
+	if true == false {
+		return defaultReturn, nil, errors.New("This message brought to you by the laws of physics being broken")
+	}
+
+	// verify the required parameter 'body' is set
+	if &body == nil {
+		// false
+		return defaultReturn, nil, errors.New("Missing required parameter 'body' when calling OutboundApi->PostOutboundContactlistsBulkUpdate")
+	}
+
+	headerParams := make(map[string]string)
+	queryParams := make(map[string]string)
+	formParams := url.Values{}
+	var postBody interface{}
+	var postFileName string
+	var fileBytes []byte
+	// authentication (PureCloud OAuth) required
+
+	// oauth required
+	if a.Configuration.AccessToken != ""{
+		headerParams["Authorization"] =  "Bearer " + a.Configuration.AccessToken
+	}
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	
+
+	// Find an replace keys that were altered to avoid clashes with go keywords 
+	correctedQueryParams := make(map[string]string)
+	for k, v := range queryParams {
+		if k == "varType" {
+			correctedQueryParams["type"] = v
+			continue
+		}
+		correctedQueryParams[k] = v
+	}
+	queryParams = correctedQueryParams
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+	}
+
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	postBody = &body
+
+	var successPayload *Contactlistsbulkeditresponse
+	response, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, postFileName, fileBytes, "other")
+	if err != nil {
+		// Nothing special to do here, but do avoid processing the response
+	} else if err == nil && response.Error != nil {
+		err = errors.New(response.ErrorMessage)
+	} else if response.HasBody {
+		if "Contactlistsbulkeditresponse" == "string" {
 			copy(response.RawBody, &successPayload)
 		} else {
 			err = json.Unmarshal(response.RawBody, &successPayload)

@@ -51,6 +51,15 @@ type Outboundsettings struct {
 	// RescheduleTimeZoneSkippedContacts - Whether or not to reschedule time-zone blocked contacts
 	RescheduleTimeZoneSkippedContacts *bool `json:"rescheduleTimeZoneSkippedContacts,omitempty"`
 
+	// ContactListDefaultRetentionType - The default type of retention for newly created contact lists and contact list templates. Valid values: Never, Today, RetentionDays.
+	ContactListDefaultRetentionType *string `json:"contactListDefaultRetentionType,omitempty"`
+
+	// ContactListDefaultRetentionDays - The default number of days to retain newly created contact lists and contact list templates. Only applicable when retentionType is RetentionDays.
+	ContactListDefaultRetentionDays *int `json:"contactListDefaultRetentionDays,omitempty"`
+
+	// TimeZone - The time zone for newly created lists' retention when option Today is used; for example, Africa/Abidjan. Time zones are represented as a string of the zone name as found in the IANA time zone database. For example: UTC, Etc/UTC, or Europe/London
+	TimeZone *string `json:"timeZone,omitempty"`
+
 	// SelfUri - The URI for this object
 	SelfUri *string `json:"selfUri,omitempty"`
 }
@@ -160,6 +169,12 @@ func (o Outboundsettings) MarshalJSON() ([]byte, error) {
 		
 		RescheduleTimeZoneSkippedContacts *bool `json:"rescheduleTimeZoneSkippedContacts,omitempty"`
 		
+		ContactListDefaultRetentionType *string `json:"contactListDefaultRetentionType,omitempty"`
+		
+		ContactListDefaultRetentionDays *int `json:"contactListDefaultRetentionDays,omitempty"`
+		
+		TimeZone *string `json:"timeZone,omitempty"`
+		
 		SelfUri *string `json:"selfUri,omitempty"`
 		Alias
 	}{ 
@@ -188,6 +203,12 @@ func (o Outboundsettings) MarshalJSON() ([]byte, error) {
 		AutomaticTimeZoneMapping: o.AutomaticTimeZoneMapping,
 		
 		RescheduleTimeZoneSkippedContacts: o.RescheduleTimeZoneSkippedContacts,
+		
+		ContactListDefaultRetentionType: o.ContactListDefaultRetentionType,
+		
+		ContactListDefaultRetentionDays: o.ContactListDefaultRetentionDays,
+		
+		TimeZone: o.TimeZone,
 		
 		SelfUri: o.SelfUri,
 		Alias:    (Alias)(o),
@@ -257,6 +278,19 @@ func (o *Outboundsettings) UnmarshalJSON(b []byte) error {
 	
 	if RescheduleTimeZoneSkippedContacts, ok := OutboundsettingsMap["rescheduleTimeZoneSkippedContacts"].(bool); ok {
 		o.RescheduleTimeZoneSkippedContacts = &RescheduleTimeZoneSkippedContacts
+	}
+    
+	if ContactListDefaultRetentionType, ok := OutboundsettingsMap["contactListDefaultRetentionType"].(string); ok {
+		o.ContactListDefaultRetentionType = &ContactListDefaultRetentionType
+	}
+    
+	if ContactListDefaultRetentionDays, ok := OutboundsettingsMap["contactListDefaultRetentionDays"].(float64); ok {
+		ContactListDefaultRetentionDaysInt := int(ContactListDefaultRetentionDays)
+		o.ContactListDefaultRetentionDays = &ContactListDefaultRetentionDaysInt
+	}
+	
+	if TimeZone, ok := OutboundsettingsMap["timeZone"].(string); ok {
+		o.TimeZone = &TimeZone
 	}
     
 	if SelfUri, ok := OutboundsettingsMap["selfUri"].(string); ok {

@@ -31,6 +31,9 @@ type Variable struct {
 
 	// ListVariables - The variables that the list result will be stored in. Only applicable when type is 'List'.
 	ListVariables *[]Variable `json:"listVariables,omitempty"`
+
+	// CustomConversationAttributes - The Conversation Custom Attributes (CCA) for this variable. When present, the variable value is bound to the specified conversation attributes.
+	CustomConversationAttributes *[]Conversationattribute `json:"customConversationAttributes,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -109,6 +112,8 @@ func (o Variable) MarshalJSON() ([]byte, error) {
 		ListValues *interface{} `json:"listValues,omitempty"`
 		
 		ListVariables *[]Variable `json:"listVariables,omitempty"`
+		
+		CustomConversationAttributes *[]Conversationattribute `json:"customConversationAttributes,omitempty"`
 		Alias
 	}{ 
 		Name: o.Name,
@@ -124,6 +129,8 @@ func (o Variable) MarshalJSON() ([]byte, error) {
 		ListValues: o.ListValues,
 		
 		ListVariables: o.ListVariables,
+		
+		CustomConversationAttributes: o.CustomConversationAttributes,
 		Alias:    (Alias)(o),
 	})
 }
@@ -164,6 +171,11 @@ func (o *Variable) UnmarshalJSON(b []byte) error {
 	if ListVariables, ok := VariableMap["listVariables"].([]interface{}); ok {
 		ListVariablesString, _ := json.Marshal(ListVariables)
 		json.Unmarshal(ListVariablesString, &o.ListVariables)
+	}
+	
+	if CustomConversationAttributes, ok := VariableMap["customConversationAttributes"].([]interface{}); ok {
+		CustomConversationAttributesString, _ := json.Marshal(CustomConversationAttributes)
+		json.Unmarshal(CustomConversationAttributesString, &o.CustomConversationAttributes)
 	}
 	
 

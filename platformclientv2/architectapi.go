@@ -3667,7 +3667,7 @@ func (a ArchitectApi) GetArchitectPromptResources(promptId string, pageNumber in
 // Get a pageable list of user prompts
 //
 // The returned list is pageable, and query parameters can be used for filtering.  Multiple names can be specified, in which case all matching prompts will be returned, and no other filters will be evaluated.
-func (a ArchitectApi) GetArchitectPrompts(pageNumber int, pageSize int, name []string, description string, nameOrDescription string, sortBy string, sortOrder string, includeMediaUris bool, includeResources bool, language []string) (*Promptentitylisting, *APIResponse, error) {
+func (a ArchitectApi) GetArchitectPrompts(pageNumber int, pageSize int, name []string, description string, nameOrDescription string, sortBy string, sortOrder string, includeMediaUris bool, includeResources bool, language []string, divisionId []string) (*Promptentitylisting, *APIResponse, error) {
 	var httpMethod = "GET"
 	// create path and map variables
 	path := a.Configuration.BasePath + "/api/v2/architect/prompts"
@@ -3713,6 +3713,8 @@ func (a ArchitectApi) GetArchitectPrompts(pageNumber int, pageSize int, name []s
 	queryParams["includeResources"] = a.Configuration.APIClient.ParameterToString(includeResources, "")
 	
 	queryParams["language"] = a.Configuration.APIClient.ParameterToString(language, "multi")
+	
+	queryParams["divisionId"] = a.Configuration.APIClient.ParameterToString(divisionId, "multi")
 	
 
 	// Find an replace keys that were altered to avoid clashes with go keywords 
@@ -11535,7 +11537,7 @@ func (a ArchitectApi) PostFlowsInstancesQuery(body Criteriaquery, indexOnly bool
 // PostFlowsJobs invokes POST /api/v2/flows/jobs
 //
 // Register Architect Job. Returns a URL where a file, such as an Architect flow YAML file, can be PUT which will then initiate the job.
-func (a ArchitectApi) PostFlowsJobs(body interface{}) (*Registerarchitectjobresponse, *APIResponse, error) {
+func (a ArchitectApi) PostFlowsJobs(body Registerarchitectjobrequest) (*Registerarchitectjobresponse, *APIResponse, error) {
 	var httpMethod = "POST"
 	// create path and map variables
 	path := a.Configuration.BasePath + "/api/v2/flows/jobs"

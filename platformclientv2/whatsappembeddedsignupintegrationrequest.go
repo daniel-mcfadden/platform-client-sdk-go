@@ -14,7 +14,7 @@ type Whatsappembeddedsignupintegrationrequest struct {
 	// Id - The globally unique identifier for the object.
 	Id *string `json:"id,omitempty"`
 
-	// Name - The name of the WhatsApp Integration
+	// Name - The name of the WhatsApp Integration. Required for Embedded Signup v2; optional for v4 (set later via PATCH).
 	Name *string `json:"name,omitempty"`
 
 	// SupportedContent - Defines the SupportedContent profile configured for an integration
@@ -23,7 +23,7 @@ type Whatsappembeddedsignupintegrationrequest struct {
 	// MessagingSetting - Defines the message settings to be applied for this integration
 	MessagingSetting *Messagingsettingrequestreference `json:"messagingSetting,omitempty"`
 
-	// EmbeddedSignupAccessToken - The access token returned from the embedded signup flow
+	// EmbeddedSignupAccessToken - The access token returned from the embedded signup flow. Not required for versions v4 or later.
 	EmbeddedSignupAccessToken *string `json:"embeddedSignupAccessToken,omitempty"`
 
 	// SelfUri - The URI for this object

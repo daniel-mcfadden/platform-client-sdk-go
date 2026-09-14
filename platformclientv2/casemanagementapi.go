@@ -2266,8 +2266,6 @@ func (a CaseManagementApi) GetCasemanagementCasesExternalcontact(externalContact
 // GetCasemanagementCasesQueryJob invokes GET /api/v2/casemanagement/cases/query/jobs/{jobId}
 //
 // Get a case query job by id
-//
-// Preview: GetCasemanagementCasesQueryJob is a preview method and is subject to both breaking and non-breaking changes at any time without notice
 func (a CaseManagementApi) GetCasemanagementCasesQueryJob(jobId string) (*Casequeryjobresponse, *APIResponse, error) {
 	var httpMethod = "GET"
 	// create path and map variables
@@ -2350,8 +2348,6 @@ func (a CaseManagementApi) GetCasemanagementCasesQueryJob(jobId string) (*Casequ
 // GetCasemanagementCasesQueryJobResults invokes GET /api/v2/casemanagement/cases/query/jobs/{jobId}/results
 //
 // Get results for a case query job
-//
-// Preview: GetCasemanagementCasesQueryJobResults is a preview method and is subject to both breaking and non-breaking changes at any time without notice
 func (a CaseManagementApi) GetCasemanagementCasesQueryJobResults(jobId string) (*Casequeryjobresultsresponse, *APIResponse, error) {
 	var httpMethod = "GET"
 	// create path and map variables
@@ -2608,8 +2604,6 @@ func (a CaseManagementApi) PatchCasemanagementCaseDatedue(caseId string, body Ca
 // PatchCasemanagementCaseOwner invokes PATCH /api/v2/casemanagement/cases/{caseId}/owner
 //
 // Update the ownerId of a Case
-//
-// Preview: PatchCasemanagementCaseOwner is a preview method and is subject to both breaking and non-breaking changes at any time without notice
 func (a CaseManagementApi) PatchCasemanagementCaseOwner(caseId string, body Caseownerupdate) (*Case, *APIResponse, error) {
 	var httpMethod = "PATCH"
 	// create path and map variables
@@ -4212,8 +4206,6 @@ func (a CaseManagementApi) PostCasemanagementCasesAssociationsQuery(body Caseass
 // PostCasemanagementCasesQueryJobs invokes POST /api/v2/casemanagement/cases/query/jobs
 //
 // Create a Case query job.
-//
-// Preview: PostCasemanagementCasesQueryJobs is a preview method and is subject to both breaking and non-breaking changes at any time without notice
 func (a CaseManagementApi) PostCasemanagementCasesQueryJobs(body Casequeryjobcreate) (*Casequeryjobresponse, *APIResponse, error) {
 	var httpMethod = "POST"
 	// create path and map variables

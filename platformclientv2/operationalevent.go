@@ -42,6 +42,12 @@ type Operationalevent struct {
 	// DateCreated - The date when the event created. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z
 	DateCreated *time.Time `json:"dateCreated,omitempty"`
 
+	// DateModified - The date and time the entity affected by the event was last modified. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z
+	DateModified *time.Time `json:"dateModified,omitempty"`
+
+	// EntityModifiedBy - The unique identifier of the user who last modified the entity affected by the event.
+	EntityModifiedBy *string `json:"entityModifiedBy,omitempty"`
+
 	// EntityVersion - The version of the entity in the providing service
 	EntityVersion *string `json:"entityVersion,omitempty"`
 
@@ -81,7 +87,7 @@ func (o Operationalevent) MarshalJSON() ([]byte, error) {
 		val := reflect.ValueOf(o)
 
 		// Known field names that require type overrides
-		dateTimeFields := []string{ "DateCreated", }
+		dateTimeFields := []string{ "DateCreated","DateModified", }
 		localDateTimeFields := []string{  }
 		dateFields := []string{  }
 
@@ -122,6 +128,14 @@ func (o Operationalevent) MarshalJSON() ([]byte, error) {
 		DateCreated = nil
 	}
 	
+	DateModified := new(string)
+	if o.DateModified != nil {
+		
+		*DateModified = timeutil.Strftime(o.DateModified, "%Y-%m-%dT%H:%M:%S.%fZ")
+	} else {
+		DateModified = nil
+	}
+	
 	return json.Marshal(&struct { 
 		EventDefinition *Addressableentityref `json:"eventDefinition,omitempty"`
 		
@@ -142,6 +156,10 @@ func (o Operationalevent) MarshalJSON() ([]byte, error) {
 		Conversation *Addressableentityref `json:"conversation,omitempty"`
 		
 		DateCreated *string `json:"dateCreated,omitempty"`
+		
+		DateModified *string `json:"dateModified,omitempty"`
+		
+		EntityModifiedBy *string `json:"entityModifiedBy,omitempty"`
 		
 		EntityVersion *string `json:"entityVersion,omitempty"`
 		
@@ -169,6 +187,10 @@ func (o Operationalevent) MarshalJSON() ([]byte, error) {
 		Conversation: o.Conversation,
 		
 		DateCreated: DateCreated,
+		
+		DateModified: DateModified,
+		
+		EntityModifiedBy: o.EntityModifiedBy,
 		
 		EntityVersion: o.EntityVersion,
 		
@@ -229,6 +251,15 @@ func (o *Operationalevent) UnmarshalJSON(b []byte) error {
 		o.DateCreated = &DateCreated
 	}
 	
+	if dateModifiedString, ok := OperationaleventMap["dateModified"].(string); ok {
+		DateModified, _ := time.Parse("2006-01-02T15:04:05.999999Z", dateModifiedString)
+		o.DateModified = &DateModified
+	}
+	
+	if EntityModifiedBy, ok := OperationaleventMap["entityModifiedBy"].(string); ok {
+		o.EntityModifiedBy = &EntityModifiedBy
+	}
+    
 	if EntityVersion, ok := OperationaleventMap["entityVersion"].(string); ok {
 		o.EntityVersion = &EntityVersion
 	}

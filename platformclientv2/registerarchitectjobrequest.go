@@ -10,7 +10,10 @@ import (
 // Registerarchitectjobrequest
 type Registerarchitectjobrequest struct { 
 	// SetFieldNames defines the list of fields to use for controlled JSON serialization
-	SetFieldNames map[string]bool `json:"-"`}
+	SetFieldNames map[string]bool `json:"-"`
+	// CreateStubs - If true, flow stubs will be created for any dependencies during the job.
+	CreateStubs *bool `json:"createStubs,omitempty"`
+}
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
 func (o *Registerarchitectjobrequest) SetField(field string, fieldValue interface{}) {
@@ -74,8 +77,12 @@ func (o Registerarchitectjobrequest) MarshalJSON() ([]byte, error) {
 	_  = timeutil.Timedelta{}
 	type Alias Registerarchitectjobrequest
 	
-	return json.Marshal(&struct { Alias
-	}{ Alias:    (Alias)(o),
+	return json.Marshal(&struct { 
+		CreateStubs *bool `json:"createStubs,omitempty"`
+		Alias
+	}{ 
+		CreateStubs: o.CreateStubs,
+		Alias:    (Alias)(o),
 	})
 }
 
@@ -86,6 +93,10 @@ func (o *Registerarchitectjobrequest) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	
+	if CreateStubs, ok := RegisterarchitectjobrequestMap["createStubs"].(bool); ok {
+		o.CreateStubs = &CreateStubs
+	}
+    
 
 	return nil
 }

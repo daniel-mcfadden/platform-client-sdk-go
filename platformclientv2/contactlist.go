@@ -69,6 +69,18 @@ type Contactlist struct {
 	// TrimWhitespace - Whether to trim white space when importing a contactlist csv file, default value = true
 	TrimWhitespace *bool `json:"trimWhitespace,omitempty"`
 
+	// RetentionType - The type of retention for this list. Valid values: Never, Today, RetentionDays
+	RetentionType *string `json:"retentionType,omitempty"`
+
+	// RetentionDays - The number of days to retain this list. Required when retentionType is RetentionDays.
+	RetentionDays *int `json:"retentionDays,omitempty"`
+
+	// DateExpiration - The expiration date of the contact list. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z
+	DateExpiration *time.Time `json:"dateExpiration,omitempty"`
+
+	// TimeZone - The time zone for this contact list; for example, Africa/Abidjan. Time zones are represented as a string of the zone name as found in the IANA time zone database. For example: UTC, Etc/UTC, or Europe/London
+	TimeZone *string `json:"timeZone,omitempty"`
+
 	// SelfUri - The URI for this object
 	SelfUri *string `json:"selfUri,omitempty"`
 }
@@ -102,7 +114,7 @@ func (o Contactlist) MarshalJSON() ([]byte, error) {
 		val := reflect.ValueOf(o)
 
 		// Known field names that require type overrides
-		dateTimeFields := []string{ "DateCreated","DateModified", }
+		dateTimeFields := []string{ "DateCreated","DateModified","DateExpiration", }
 		localDateTimeFields := []string{  }
 		dateFields := []string{  }
 
@@ -151,6 +163,14 @@ func (o Contactlist) MarshalJSON() ([]byte, error) {
 		DateModified = nil
 	}
 	
+	DateExpiration := new(string)
+	if o.DateExpiration != nil {
+		
+		*DateExpiration = timeutil.Strftime(o.DateExpiration, "%Y-%m-%dT%H:%M:%S.%fZ")
+	} else {
+		DateExpiration = nil
+	}
+	
 	return json.Marshal(&struct { 
 		Id *string `json:"id,omitempty"`
 		
@@ -189,6 +209,14 @@ func (o Contactlist) MarshalJSON() ([]byte, error) {
 		ColumnDataTypeSpecifications *[]Columndatatypespecification `json:"columnDataTypeSpecifications,omitempty"`
 		
 		TrimWhitespace *bool `json:"trimWhitespace,omitempty"`
+		
+		RetentionType *string `json:"retentionType,omitempty"`
+		
+		RetentionDays *int `json:"retentionDays,omitempty"`
+		
+		DateExpiration *string `json:"dateExpiration,omitempty"`
+		
+		TimeZone *string `json:"timeZone,omitempty"`
 		
 		SelfUri *string `json:"selfUri,omitempty"`
 		Alias
@@ -230,6 +258,14 @@ func (o Contactlist) MarshalJSON() ([]byte, error) {
 		ColumnDataTypeSpecifications: o.ColumnDataTypeSpecifications,
 		
 		TrimWhitespace: o.TrimWhitespace,
+		
+		RetentionType: o.RetentionType,
+		
+		RetentionDays: o.RetentionDays,
+		
+		DateExpiration: DateExpiration,
+		
+		TimeZone: o.TimeZone,
 		
 		SelfUri: o.SelfUri,
 		Alias:    (Alias)(o),
@@ -330,6 +366,24 @@ func (o *Contactlist) UnmarshalJSON(b []byte) error {
 	
 	if TrimWhitespace, ok := ContactlistMap["trimWhitespace"].(bool); ok {
 		o.TrimWhitespace = &TrimWhitespace
+	}
+    
+	if RetentionType, ok := ContactlistMap["retentionType"].(string); ok {
+		o.RetentionType = &RetentionType
+	}
+    
+	if RetentionDays, ok := ContactlistMap["retentionDays"].(float64); ok {
+		RetentionDaysInt := int(RetentionDays)
+		o.RetentionDays = &RetentionDaysInt
+	}
+	
+	if dateExpirationString, ok := ContactlistMap["dateExpiration"].(string); ok {
+		DateExpiration, _ := time.Parse("2006-01-02T15:04:05.999999Z", dateExpirationString)
+		o.DateExpiration = &DateExpiration
+	}
+	
+	if TimeZone, ok := ContactlistMap["timeZone"].(string); ok {
+		o.TimeZone = &TimeZone
 	}
     
 	if SelfUri, ok := ContactlistMap["selfUri"].(string); ok {

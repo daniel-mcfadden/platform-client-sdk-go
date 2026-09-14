@@ -25,6 +25,9 @@ type Surveyassignment struct {
 
 	// SendingDomain - Validated email domain, required
 	SendingDomain *string `json:"sendingDomain,omitempty"`
+
+	// UseThreadingTimelineForSendTime - If true, the survey invitation send time will be calculated using the threading timeline. If false or unspecified, a fixed 72-hour delay will be used. Default is false for new policies.
+	UseThreadingTimelineForSendTime *bool `json:"useThreadingTimelineForSendTime,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -99,6 +102,8 @@ func (o Surveyassignment) MarshalJSON() ([]byte, error) {
 		SendingUser *string `json:"sendingUser,omitempty"`
 		
 		SendingDomain *string `json:"sendingDomain,omitempty"`
+		
+		UseThreadingTimelineForSendTime *bool `json:"useThreadingTimelineForSendTime,omitempty"`
 		Alias
 	}{ 
 		SurveyForm: o.SurveyForm,
@@ -110,6 +115,8 @@ func (o Surveyassignment) MarshalJSON() ([]byte, error) {
 		SendingUser: o.SendingUser,
 		
 		SendingDomain: o.SendingDomain,
+		
+		UseThreadingTimelineForSendTime: o.UseThreadingTimelineForSendTime,
 		Alias:    (Alias)(o),
 	})
 }
@@ -141,6 +148,10 @@ func (o *Surveyassignment) UnmarshalJSON(b []byte) error {
     
 	if SendingDomain, ok := SurveyassignmentMap["sendingDomain"].(string); ok {
 		o.SendingDomain = &SendingDomain
+	}
+    
+	if UseThreadingTimelineForSendTime, ok := SurveyassignmentMap["useThreadingTimelineForSendTime"].(bool); ok {
+		o.UseThreadingTimelineForSendTime = &UseThreadingTimelineForSendTime
 	}
     
 

@@ -90,6 +90,9 @@ type Queuefullreference struct {
 	// OnHoldPrompt - The audio to be played when calls on this queue are on hold. If not configured, the default on-hold music will play.
 	OnHoldPrompt *Domainentityref `json:"onHoldPrompt,omitempty"`
 
+	// DefaultMediaLanguage - The canonical language code (e.g. en-US) used for the default media language on the queue.
+	DefaultMediaLanguage *string `json:"defaultMediaLanguage,omitempty"`
+
 	// AutoAnswerOnly - Specifies whether the configured whisper should play for all ACD calls, or only for those which are auto-answered.
 	AutoAnswerOnly *bool `json:"autoAnswerOnly,omitempty"`
 
@@ -267,6 +270,8 @@ func (o Queuefullreference) MarshalJSON() ([]byte, error) {
 		
 		OnHoldPrompt *Domainentityref `json:"onHoldPrompt,omitempty"`
 		
+		DefaultMediaLanguage *string `json:"defaultMediaLanguage,omitempty"`
+		
 		AutoAnswerOnly *bool `json:"autoAnswerOnly,omitempty"`
 		
 		CannedResponseLibraries *Cannedresponselibraries `json:"cannedResponseLibraries,omitempty"`
@@ -349,6 +354,8 @@ func (o Queuefullreference) MarshalJSON() ([]byte, error) {
 		WhisperPrompt: o.WhisperPrompt,
 		
 		OnHoldPrompt: o.OnHoldPrompt,
+		
+		DefaultMediaLanguage: o.DefaultMediaLanguage,
 		
 		AutoAnswerOnly: o.AutoAnswerOnly,
 		
@@ -512,6 +519,10 @@ func (o *Queuefullreference) UnmarshalJSON(b []byte) error {
 		json.Unmarshal(OnHoldPromptString, &o.OnHoldPrompt)
 	}
 	
+	if DefaultMediaLanguage, ok := QueuefullreferenceMap["defaultMediaLanguage"].(string); ok {
+		o.DefaultMediaLanguage = &DefaultMediaLanguage
+	}
+    
 	if AutoAnswerOnly, ok := QueuefullreferenceMap["autoAnswerOnly"].(bool); ok {
 		o.AutoAnswerOnly = &AutoAnswerOnly
 	}

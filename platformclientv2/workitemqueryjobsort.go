@@ -11,11 +11,14 @@ import (
 type Workitemqueryjobsort struct { 
 	// SetFieldNames defines the list of fields to use for controlled JSON serialization
 	SetFieldNames map[string]bool `json:"-"`
-	// Name - Specify an attribute for sorting.
+	// Name - Specify an attribute for sorting. Use 'customFields' to sort by a custom field, in which case the customField property is required.
 	Name *string `json:"name,omitempty"`
 
 	// Ascending - Sort Ascending
 	Ascending *bool `json:"ascending,omitempty"`
+
+	// CustomField - The key of the custom field to sort by. Required when name is 'customFields' and must not be set otherwise.
+	CustomField *string `json:"customField,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -84,11 +87,15 @@ func (o Workitemqueryjobsort) MarshalJSON() ([]byte, error) {
 		Name *string `json:"name,omitempty"`
 		
 		Ascending *bool `json:"ascending,omitempty"`
+		
+		CustomField *string `json:"customField,omitempty"`
 		Alias
 	}{ 
 		Name: o.Name,
 		
 		Ascending: o.Ascending,
+		
+		CustomField: o.CustomField,
 		Alias:    (Alias)(o),
 	})
 }
@@ -106,6 +113,10 @@ func (o *Workitemqueryjobsort) UnmarshalJSON(b []byte) error {
     
 	if Ascending, ok := WorkitemqueryjobsortMap["ascending"].(bool); ok {
 		o.Ascending = &Ascending
+	}
+    
+	if CustomField, ok := WorkitemqueryjobsortMap["customField"].(string); ok {
+		o.CustomField = &CustomField
 	}
     
 

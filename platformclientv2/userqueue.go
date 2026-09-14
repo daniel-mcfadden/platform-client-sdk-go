@@ -90,6 +90,9 @@ type Userqueue struct {
 	// OnHoldPrompt - The audio to be played when calls on this queue are on hold. If not configured, the default on-hold music will play.
 	OnHoldPrompt *Domainentityref `json:"onHoldPrompt,omitempty"`
 
+	// DefaultMediaLanguage - The canonical language code (e.g. en-US) used for the default media language on the queue.
+	DefaultMediaLanguage *string `json:"defaultMediaLanguage,omitempty"`
+
 	// CannedResponseLibraries - Canned response library IDs and mode with which they are associated with the queue
 	CannedResponseLibraries *Cannedresponselibraries `json:"cannedResponseLibraries,omitempty"`
 
@@ -267,6 +270,8 @@ func (o Userqueue) MarshalJSON() ([]byte, error) {
 		
 		OnHoldPrompt *Domainentityref `json:"onHoldPrompt,omitempty"`
 		
+		DefaultMediaLanguage *string `json:"defaultMediaLanguage,omitempty"`
+		
 		CannedResponseLibraries *Cannedresponselibraries `json:"cannedResponseLibraries,omitempty"`
 		
 		EnableTranscription *bool `json:"enableTranscription,omitempty"`
@@ -349,6 +354,8 @@ func (o Userqueue) MarshalJSON() ([]byte, error) {
 		WhisperPrompt: o.WhisperPrompt,
 		
 		OnHoldPrompt: o.OnHoldPrompt,
+		
+		DefaultMediaLanguage: o.DefaultMediaLanguage,
 		
 		CannedResponseLibraries: o.CannedResponseLibraries,
 		
@@ -512,6 +519,10 @@ func (o *Userqueue) UnmarshalJSON(b []byte) error {
 		json.Unmarshal(OnHoldPromptString, &o.OnHoldPrompt)
 	}
 	
+	if DefaultMediaLanguage, ok := UserqueueMap["defaultMediaLanguage"].(string); ok {
+		o.DefaultMediaLanguage = &DefaultMediaLanguage
+	}
+    
 	if CannedResponseLibraries, ok := UserqueueMap["cannedResponseLibraries"].(map[string]interface{}); ok {
 		CannedResponseLibrariesString, _ := json.Marshal(CannedResponseLibraries)
 		json.Unmarshal(CannedResponseLibrariesString, &o.CannedResponseLibraries)

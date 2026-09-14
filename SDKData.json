@@ -4557,6 +4557,11 @@
                     "enum": ["Inbound", "Outbound"]
                 }, 
                 {
+                    "name": "Preview",
+                    "description": "Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.",
+                    "dataType": "bool"
+                }, 
+                {
                     "name": "EvaluationStartDate",
                     "description": "Date when the checklist evaluation began. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
                     "dataType": "time.Time"
@@ -6347,6 +6352,37 @@
                     "name": "Notes",
                     "description": "Comments explaining the unavailability time span",
                     "dataType": "string"
+                }
+            ]
+        }, 
+        "agentschedulingpreference": { 
+            "properties": [
+                {
+                    "name": "Id",
+                    "description": "The globally unique identifier for the scheduling preference",
+                    "readOnly": true,
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "TimeSpan",
+                    "description": "Exact date, time and length of the scheduling preference time span",
+                    "required": true,
+                    "dataType": "Wfmtimespan"
+                }, 
+                {
+                    "name": "PreferenceLevel",
+                    "description": "The preference level for this time span",
+                    "required": true,
+                    "dataType": "string",
+                    "enum": ["StronglyPrefer", "Prefer", "Avoid", "StronglyAvoid"]
+                }
+            ]
+        }, 
+        "agentschedulingpreferencelisting": { 
+            "properties": [
+                {
+                    "name": "Entities",
+                    "dataType": "[]Agentschedulingpreference"
                 }
             ]
         }, 
@@ -19763,6 +19799,40 @@
                 }
             ]
         }, 
+        "bulkentityerrorcontactlist": { 
+            "properties": [
+                {
+                    "name": "Code",
+                    "description": "An error code for the specific error condition.",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "Message",
+                    "description": "A short error message.",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "Status",
+                    "description": "The HTTP Status Code for the error.",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "Retryable",
+                    "description": "Whether this particular error should be retried.",
+                    "dataType": "bool"
+                }, 
+                {
+                    "name": "Details",
+                    "description": "Additional error details for specific fields.",
+                    "dataType": "[]Bulkerrordetail"
+                }, 
+                {
+                    "name": "Entity",
+                    "description": "The entity body specified in the Bulk request operation that caused this error.",
+                    "dataType": "Contactlist"
+                }
+            ]
+        }, 
         "bulkentityerrorentity": { 
             "properties": [
                 {
@@ -20713,6 +20783,35 @@
                     "name": "ErrorIndexes",
                     "description": "An index of where the errors are in the listing.",
                     "dataType": "[]int"
+                }
+            ]
+        }, 
+        "bulkresponseresultcontactlistcontactlistbulkentityerrorcontactlist": { 
+            "properties": [
+                {
+                    "name": "Id",
+                    "description": "The id associated with this operation. For Bulk Enrich, this id is specified in the request; for all other Bulk endpoints, this id is the id of the affected entity.",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "Success",
+                    "description": "Whether the requested operation completed successfully.",
+                    "dataType": "bool"
+                }, 
+                {
+                    "name": "Entity",
+                    "description": "The entity which was affected by this Bulk operation. Only returned on success.",
+                    "dataType": "Contactlist"
+                }, 
+                {
+                    "name": "VarError",
+                    "description": "An error describing why this Bulk operation failed. Only returned on failure.",
+                    "dataType": "Bulkentityerrorcontactlist"
+                }, 
+                {
+                    "name": "Status",
+                    "description": "Status Code for the requested operation.",
+                    "dataType": "int"
                 }
             ]
         }, 
@@ -22661,6 +22760,16 @@
                     "description": "The URI for this object",
                     "readOnly": true,
                     "dataType": "string"
+                }
+            ]
+        }, 
+        "businessunitschedulingpreferencessettingsresponse": { 
+            "properties": [
+                {
+                    "name": "Enabled",
+                    "description": "Indicates whether scheduling preferences are enabled for the business unit",
+                    "required": true,
+                    "dataType": "bool"
                 }
             ]
         }, 
@@ -30980,6 +31089,11 @@
                     "description": "Direction of the conversation.",
                     "dataType": "string",
                     "enum": ["Inbound", "Outbound"]
+                }, 
+                {
+                    "name": "Preview",
+                    "description": "Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.",
+                    "dataType": "bool"
                 }
             ]
         }, 
@@ -30990,6 +31104,11 @@
                     "description": "Exit reason provided at the time of finalizing the checklist.",
                     "required": true,
                     "dataType": "string"
+                }, 
+                {
+                    "name": "Preview",
+                    "description": "Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.",
+                    "dataType": "bool"
                 }
             ]
         }, 
@@ -31014,6 +31133,11 @@
                     "description": "List of conversations on which checklist evaluation is to be done.",
                     "required": true,
                     "dataType": "[]Conversationcontext"
+                }, 
+                {
+                    "name": "Preview",
+                    "description": "Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.",
+                    "dataType": "bool"
                 }
             ]
         }, 
@@ -31088,6 +31212,11 @@
                     "description": "Direction of the conversation.",
                     "dataType": "string",
                     "enum": ["Inbound", "Outbound"]
+                }, 
+                {
+                    "name": "Preview",
+                    "description": "Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.",
+                    "dataType": "bool"
                 }, 
                 {
                     "name": "SelfUri",
@@ -35959,6 +36088,28 @@
                     "dataType": "bool"
                 }, 
                 {
+                    "name": "RetentionType",
+                    "description": "The type of retention for this list. Valid values: Never, Today, RetentionDays",
+                    "dataType": "string",
+                    "enum": ["Never", "Today", "RetentionDays"]
+                }, 
+                {
+                    "name": "RetentionDays",
+                    "description": "The number of days to retain this list. Required when retentionType is RetentionDays.",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "DateExpiration",
+                    "description": "The expiration date of the contact list. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                    "readOnly": true,
+                    "dataType": "time.Time"
+                }, 
+                {
+                    "name": "TimeZone",
+                    "description": "The time zone for this contact list; for example, Africa/Abidjan. Time zones are represented as a string of the zone name as found in the IANA time zone database. For example: UTC, Etc/UTC, or Europe/London",
+                    "dataType": "string"
+                }, 
+                {
                     "name": "SelfUri",
                     "description": "The URI for this object",
                     "readOnly": true,
@@ -36507,6 +36658,39 @@
                 }
             ]
         }, 
+        "contactlistsbulkeditrequest": { 
+            "properties": [
+                {
+                    "name": "ContactListIds",
+                    "description": "Contact List IDs to be bulk edited.",
+                    "dataType": "[]string"
+                }, 
+                {
+                    "name": "ContactList",
+                    "description": "Contact list object with details of fields used for patching. Accepted fields: retentionType, retentionDays, timeZone",
+                    "dataType": "Contactlist"
+                }
+            ]
+        }, 
+        "contactlistsbulkeditresponse": { 
+            "properties": [
+                {
+                    "name": "Results",
+                    "description": "A list of results for all of the Bulk operations specified in the request. Includes both successes and failures. Ordering is NOT guaranteed - may be in a different order from the request.",
+                    "dataType": "[]Bulkresponseresultcontactlistcontactlistbulkentityerrorcontactlist"
+                }, 
+                {
+                    "name": "ErrorCount",
+                    "description": "The number of failed operations in the results.",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "ErrorIndexes",
+                    "description": "The indexes of all failed operations in the results field.",
+                    "dataType": "[]int"
+                }
+            ]
+        }, 
         "contactlisttemplate": { 
             "properties": [
                 {
@@ -36591,6 +36775,22 @@
                     "name": "TrimWhitespace",
                     "description": "Whether to trim white space when importing a ContactListTemplate csv file, default value = true",
                     "dataType": "bool"
+                }, 
+                {
+                    "name": "RetentionType",
+                    "description": "The type of retention for this ContactListTemplate. Valid values: Never, Today, RetentionDays",
+                    "dataType": "string",
+                    "enum": ["Never", "Today", "RetentionDays"]
+                }, 
+                {
+                    "name": "RetentionDays",
+                    "description": "The number of days to retain contact lists created from this template. Required when retentionType is RetentionDays.",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "TimeZone",
+                    "description": "The time zone for this contact list template; for example, Africa/Abidjan. Time zones are represented as a string of the zone name as found in the IANA time zone database. For example: UTC, Etc/UTC, or Europe/London",
+                    "dataType": "string"
                 }, 
                 {
                     "name": "SelfUri",
@@ -36700,6 +36900,21 @@
                 {
                     "name": "FileSpecificationTemplateId",
                     "description": "File specification template ID",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "RetentionTypeColumn",
+                    "description": "The column name from your file to get retention type values from.",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "RetentionDaysColumn",
+                    "description": "The column name from your file to get retention day values from.",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "RetentionDateExpirationColumn",
+                    "description": "The column name from your file to get date expiration values from.",
                     "dataType": "string"
                 }
             ]
@@ -39518,6 +39733,22 @@
                 }
             ]
         }, 
+        "conversationattribute": { 
+            "properties": [
+                {
+                    "name": "Schema",
+                    "description": "The Conversation Custom Attributes schema that the variable is bound to.",
+                    "required": true,
+                    "dataType": "Conversationattributeschema"
+                }, 
+                {
+                    "name": "AttributeName",
+                    "description": "The name of the attribute within the schema that the variable value is bound to.",
+                    "required": true,
+                    "dataType": "string"
+                }
+            ]
+        }, 
         "conversationattributeproperties": { 
             "properties": [
                 {
@@ -39530,6 +39761,23 @@
                     "name": "Name",
                     "description": "Attribute name.",
                     "required": true,
+                    "dataType": "string"
+                }
+            ]
+        }, 
+        "conversationattributeschema": { 
+            "description": "A reference to a Conversation Custom Attributes schema.",
+            "properties": [
+                {
+                    "name": "Id",
+                    "description": "The ID of the Conversation Custom Attributes schema.",
+                    "required": true,
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "SelfUri",
+                    "description": "The URI for the Conversation Custom Attributes schema.",
+                    "readOnly": true,
                     "dataType": "string"
                 }
             ]
@@ -55537,6 +55785,11 @@
                     "dataType": "Domainentityref"
                 }, 
                 {
+                    "name": "DefaultMediaLanguage",
+                    "description": "The canonical language code (e.g. en-US) used for the default media language on the queue.",
+                    "dataType": "string"
+                }, 
+                {
                     "name": "AutoAnswerOnly",
                     "description": "Specifies whether the configured whisper should play for all ACD calls, or only for those which are auto-answered.",
                     "dataType": "bool"
@@ -55780,6 +56033,11 @@
                     "name": "Name",
                     "description": "The name of the skill.",
                     "required": true,
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "DivisionId",
+                    "description": "The division to which this skill will belong",
                     "dataType": "string"
                 }
             ]
@@ -56494,6 +56752,11 @@
                 {
                     "name": "KeyUri",
                     "description": "The key URI for TOTP authenticator app registration.",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "EncodedQuickResponseCode",
+                    "description": "Base64-encoded PNG of the TOTP registration QR code.",
                     "dataType": "string"
                 }, 
                 {
@@ -63256,6 +63519,22 @@
                     "name": "DateCreated",
                     "description": "Timestamp for when the contact was added. Contacts added prior to 2023 September 1 may be missing this value. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
                     "readOnly": true,
+                    "dataType": "time.Time"
+                }, 
+                {
+                    "name": "RetentionType",
+                    "description": "The type of retention for this contact. Valid values: Never, Today, RetentionDays, DateExpiration",
+                    "dataType": "string",
+                    "enum": ["Never", "Today", "RetentionDays", "DateExpiration"]
+                }, 
+                {
+                    "name": "RetentionDays",
+                    "description": "The number of days to retain this contact. Required when retentionType is RetentionDays.",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "DateExpiration",
+                    "description": "The expiration date of the contact. Required when retentionType is DateExpiration. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
                     "dataType": "time.Time"
                 }, 
                 {
@@ -73503,6 +73782,11 @@
                     "name": "ManualAnswerAlertToneSeconds",
                     "description": "How long to play the alerting tone for a manual-answer interaction",
                     "dataType": "float64"
+                }, 
+                {
+                    "name": "AllOutboundEmailAddresses",
+                    "description": "The list of email addresses that are assigned to the queue and can be used by agents as an outbound email address.",
+                    "dataType": "[]Queueemailaddress"
                 }
             ]
         }, 
@@ -78591,7 +78875,7 @@
                 {
                     "name": "Code",
                     "dataType": "string",
-                    "enum": ["ACTIVE_CAMPAIGNS_LIMIT_EXCEEDED", "ALL_CAMPAIGNS_BLACKLISTED", "ANOTHER_CAMPAIGN_STARTING", "APPROACHING_CONTACT_LIMIT", "APPROACHING_DNC_LIST_PHONE_NUMBER_LIMIT", "APPROACHING_DNC_ORGANIZATION_PHONE_NUMBER_LIMIT", "APPROACHING_ENTITY_LIMIT", "AUTOMATIC_TIME_ZONE_ZIP_CODE_INVALID", "CAMPAIGN_BLACKLISTED", "CAMPAIGN_BUILD_CONTACT_QUEUE_ERROR", "CAMPAIGN_CHECK_JOB_DUPLICATE", "CAMPAIGN_CONTENT_TEMPLATE_SUBSTITUTION_MISMATCH", "CAMPAIGN_CALLS_PER_AGENT_LOW", "CAMPAIGN_EMAIL_BODY_CHARACTER_LIMIT_EXCEEDED", "CAMPAIGN_EMAIL_SUBJECT_CHARACTER_LIMIT_EXCEEDED", "CAMPAIGN_WHATSAPP_HEADER_VALUE_LIMIT_EXCEEDED", "CAMPAIGN_WHATSAPP_BUTTON_URL_VALUE_LIMIT_EXCEEDED", "CAMPAIGN_INVALIDATED", "CAMPAIGN_FORCE_STOPPED", "CAMPAIGN_MESSAGE_CHARACTER_LIMIT_EXCEEDED", "CAMPAIGN_START_ERROR", "CAMPAIGN_RULE_START_ERROR", "CAMPAIGN_SCRIPT_STAGE_MISSING", "CAMPAIGN_SET_DIALING_MODE_ERROR", "CAMPAIGN_STOPPED", "CAMPAIGN_THROTTLED", "CAMPAIGN_QUEUE_MEMBERS_LIMIT_EXCEEDED", "CAMPAIGN_WEIGHT_ZERO", "INVALID_CALLABLE_TIME_ZONE", "CALLBACK_CREATION_INVALID_NUMBER", "CALL_RULE_INVALID_CONTACT_COLUMN", "CALL_RULE_MISSING_DATA_ACTION_INPUT", "CALL_RULE_MISMATCH_TYPE", "CALL_RULE_INVALID_OPERATOR", "CALL_RULE_NO_DNC_LISTS_CONFIGURED", "CALL_RULE_UPDATED_PHONE_COLUMN", "CONTACT_LIST_FILTER_EVALUATION_FAILED", "CONTACT_LIST_FILTER_INTERNAL_ERROR", "CONTACT_COLUMNS_LIMIT_EXCEEDED", "CONTACT_COLUMN_LENGTH_LIMIT_EXCEEDED", "CONTACT_ID_LENGTH_LIMIT_EXCEEDED", "CONTACT_DATUM_LENGTH_LIMIT_EXCEEDED", "CONTACT_ZIP_CODE_COLUMN_VALUE_INVALID", "DATA_ACTION_EXECUTION_FAILED", "DATA_ACTION_AUTHENTICATION_FAILURE", "DATA_ACTION_NOT_FOUND", "DATA_ACTION_TOO_MANY_REQUESTS", "DATA_ACTION_TOO_MANY_REQUESTS_REMOTE", "ACTION_EXECUTION_FAILED", "ACTION_EXECUTION_FAILED_INVALID_PARAMETER", "DIGITAL_RULE_EVALUATION_FAILED", "DIGITAL_RULE_INTERNAL_ERROR", "DIGITAL_RULE_NO_DNC_LISTS_CONFIGURED", "DIGITAL_RULE_UPDATED_CONTACT_ADDRESS", "DIGITAL_RULE_SMS_PHONE_NUMBER_TYPE_MISMATCH", "DIGITAL_RULE_ERROR_SKIPPED", "DNC_AUTHENTICATION_FAILURE", "EXCEEDED_CONTACT_LIMIT", "EXCEEDED_DNC_RECORD_LIMIT", "EXCEEDED_DNC_PHONE_NUMBER_LENGTH", "INACTIVE_EDGES_FAILED_PLACE_CALLS", "INACTIVE_EDGES_TURNED_CAMPAIGN_OFF", "INVALID_AGENT", "INVALID_EMAIL_ADDRESS", "INVALID_PHONE_NUMBER", "IMPORT_FAILED_TO_READ_HEADERS", "IMPORT_COULD_NOT_PARSE_AN_ENTRY", "IMPORT_CONTACT_DOES_NOT_MATCH_LIST_FORMAT", "IMPORT_ENTRY_DOES_NOT_ALIGN_WITH_HEADERS", "IMPORT_INVALID_CUSTOM_ID", "IMPORT_INVALID_DATA", "IMPORT_INVALID_EMAIL_ADDRESSES", "IMPORT_INVALID_PHONE_NUMBERS", "IMPORT_INVALID_EXPIRATION_DATE", "IMPORT_EXPIRATION_DATE_EXCEEDS_MAX_DAYS", "IMPORT_COLUMN_EXCEEDS_LENGTH_LIMIT", "IMPORT_DATUM_EXCEEDS_LENGTH_LIMIT", "IMPORT_MISSING_CUSTOM_ID", "IMPORT_NO_COLUMNS_DEFINED", "IMPORT_COLUMNS_DO_NOT_EXIST_ON_LIST", "IMPORT_LIST_NO_LONGER_EXISTS", "IMPORT_NO_LISTS_CREATED_NO_CONTACTS_MATCH_FILTER", "IMPORT_TARGET_CONTACT_LIST_NAME_EXISTS", "IMPORT_FAILED_CONTACT_ZIP_CODE_COLUMN_VALUE_INVALID", "IMPORT_FAILED_CONTACT_DATA_GREATER_THAN_MAX_LENGTH", "IMPORT_FAILED_CONTACT_DATA_NOT_WITHIN_MIN_MAX_RANGE", "IMPORT_FAILED_CONTACT_DATA_INVALID_DATATYPE", "IMPORT_TOO_MANY_COLUMNS", "IMPORT_TOO_MANY_EXTRA_COLUMNS", "IMPORT_INVALID_RETENTION_TYPE", "IMPORT_INVALID_RETENTION_DAYS_MUST_BE_SET", "IMPORT_INVALID_RETENTION_DAYS_MUST_NOT_BE_SET", "IMPORT_INVALID_RETENTION_DAYS_MUST_BE_POSITIVE", "IMPORT_INVALID_RETENTION_DAYS_EXCEEDS_LIMIT", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_MUST_BE_SET", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_MUST_NOT_BE_SET", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_INVALID_FORMAT", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_NO_SECONDS", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_EXCEEDS_LIMIT", "IMPORT_INVALID_RETENTION_MISSING_TYPE", "IMPORT_INVALID_RETENTION_MISSING_PREFERRED_TIMEZONE", "IMPORT_INVALID_RETENTION_EXPIRATION_IN_PAST", "IMPORT_CONTACT_LIST_NAME_LENGTH_EXCEEDED", "FAILED_TO_DELETE_CONTACT_LIST", "RESOURCE_NOT_FOUND", "INVALID_CONTACT_UPDATE", "ORGANIZATION_HAS_NO_DOMAIN_SET", "QUEUE_NOT_FOUND", "RECYCLE_CAMPAIGN", "SCHEDULED_CAMPAIGN_INVALID", "SCHEDULE_UNKNOWN_ERROR", "SMS_CONTENT_TEMPLATE_NOT_FOUND", "RECURRING_SCHEDULE_NEXT_OCCURRENCE_FAILURE", "RECURRING_SCHEDULE_ENDED", "RECURRING_SCHEDULE_MISSED_OCCURRENCES", "VERSION_CONFLICT"]
+                    "enum": ["ACTIVE_CAMPAIGNS_LIMIT_EXCEEDED", "ALL_CAMPAIGNS_BLACKLISTED", "ANOTHER_CAMPAIGN_STARTING", "APPROACHING_CONTACT_LIMIT", "APPROACHING_DNC_LIST_PHONE_NUMBER_LIMIT", "APPROACHING_DNC_ORGANIZATION_PHONE_NUMBER_LIMIT", "APPROACHING_ENTITY_LIMIT", "AUTOMATIC_TIME_ZONE_ZIP_CODE_INVALID", "CAMPAIGN_BLACKLISTED", "CAMPAIGN_BUILD_CONTACT_QUEUE_ERROR", "CAMPAIGN_CHECK_JOB_DUPLICATE", "CAMPAIGN_CONTENT_TEMPLATE_SUBSTITUTION_MISMATCH", "CAMPAIGN_CALLS_PER_AGENT_LOW", "CAMPAIGN_EMAIL_BODY_CHARACTER_LIMIT_EXCEEDED", "CAMPAIGN_EMAIL_SUBJECT_CHARACTER_LIMIT_EXCEEDED", "CAMPAIGN_WHATSAPP_HEADER_VALUE_LIMIT_EXCEEDED", "CAMPAIGN_WHATSAPP_BUTTON_URL_VALUE_LIMIT_EXCEEDED", "CAMPAIGN_INVALIDATED", "CAMPAIGN_FORCE_STOPPED", "CAMPAIGN_MESSAGE_CHARACTER_LIMIT_EXCEEDED", "CAMPAIGN_START_ERROR", "CAMPAIGN_RULE_START_ERROR", "CAMPAIGN_RULE_QUEUE_ACTION_THROTTLED", "CAMPAIGN_RULE_QUEUE_NOT_FOUND", "CAMPAIGN_SCRIPT_STAGE_MISSING", "CAMPAIGN_SET_DIALING_MODE_ERROR", "CAMPAIGN_STOPPED", "CAMPAIGN_THROTTLED", "CAMPAIGN_QUEUE_MEMBERS_LIMIT_EXCEEDED", "CAMPAIGN_WEIGHT_ZERO", "INVALID_CALLABLE_TIME_ZONE", "CALLBACK_CREATION_INVALID_NUMBER", "CALL_RULE_INVALID_CONTACT_COLUMN", "CALL_RULE_MISSING_DATA_ACTION_INPUT", "CALL_RULE_MISMATCH_TYPE", "CALL_RULE_INVALID_OPERATOR", "CALL_RULE_NO_DNC_LISTS_CONFIGURED", "CALL_RULE_UPDATED_PHONE_COLUMN", "CONTACT_LIST_FILTER_EVALUATION_FAILED", "CONTACT_LIST_FILTER_INTERNAL_ERROR", "CONTACT_COLUMNS_LIMIT_EXCEEDED", "CONTACT_COLUMN_LENGTH_LIMIT_EXCEEDED", "CONTACT_ID_LENGTH_LIMIT_EXCEEDED", "CONTACT_DATUM_LENGTH_LIMIT_EXCEEDED", "CONTACT_ZIP_CODE_COLUMN_VALUE_INVALID", "DATA_ACTION_EXECUTION_FAILED", "DATA_ACTION_AUTHENTICATION_FAILURE", "DATA_ACTION_NOT_FOUND", "DATA_ACTION_TOO_MANY_REQUESTS", "DATA_ACTION_TOO_MANY_REQUESTS_REMOTE", "ACTION_EXECUTION_FAILED", "ACTION_EXECUTION_FAILED_INVALID_PARAMETER", "DIGITAL_RULE_EVALUATION_FAILED", "DIGITAL_RULE_INTERNAL_ERROR", "DIGITAL_RULE_NO_DNC_LISTS_CONFIGURED", "DIGITAL_RULE_UPDATED_CONTACT_ADDRESS", "DIGITAL_RULE_SMS_PHONE_NUMBER_TYPE_MISMATCH", "DIGITAL_RULE_ERROR_SKIPPED", "DNC_AUTHENTICATION_FAILURE", "EXCEEDED_CONTACT_LIMIT", "EXCEEDED_DNC_RECORD_LIMIT", "EXCEEDED_DNC_PHONE_NUMBER_LENGTH", "INACTIVE_EDGES_FAILED_PLACE_CALLS", "INACTIVE_EDGES_TURNED_CAMPAIGN_OFF", "INVALID_AGENT", "INVALID_EMAIL_ADDRESS", "INVALID_PHONE_NUMBER", "IMPORT_FAILED_TO_READ_HEADERS", "IMPORT_COULD_NOT_PARSE_AN_ENTRY", "IMPORT_CONTACT_DOES_NOT_MATCH_LIST_FORMAT", "IMPORT_ENTRY_DOES_NOT_ALIGN_WITH_HEADERS", "IMPORT_INVALID_CUSTOM_ID", "IMPORT_INVALID_DATA", "IMPORT_INVALID_EMAIL_ADDRESSES", "IMPORT_INVALID_PHONE_NUMBERS", "IMPORT_INVALID_EXPIRATION_DATE", "IMPORT_EXPIRATION_DATE_EXCEEDS_MAX_DAYS", "IMPORT_COLUMN_EXCEEDS_LENGTH_LIMIT", "IMPORT_DATUM_EXCEEDS_LENGTH_LIMIT", "IMPORT_MISSING_CUSTOM_ID", "IMPORT_NO_COLUMNS_DEFINED", "IMPORT_COLUMNS_DO_NOT_EXIST_ON_LIST", "IMPORT_LIST_NO_LONGER_EXISTS", "IMPORT_NO_LISTS_CREATED_NO_CONTACTS_MATCH_FILTER", "IMPORT_TARGET_CONTACT_LIST_NAME_EXISTS", "IMPORT_FAILED_CONTACT_ZIP_CODE_COLUMN_VALUE_INVALID", "IMPORT_FAILED_CONTACT_DATA_GREATER_THAN_MAX_LENGTH", "IMPORT_FAILED_CONTACT_DATA_NOT_WITHIN_MIN_MAX_RANGE", "IMPORT_FAILED_CONTACT_DATA_INVALID_DATATYPE", "IMPORT_TOO_MANY_COLUMNS", "IMPORT_TOO_MANY_EXTRA_COLUMNS", "IMPORT_INVALID_RETENTION_TYPE", "IMPORT_INVALID_RETENTION_DAYS_MUST_BE_SET", "IMPORT_INVALID_RETENTION_DAYS_MUST_NOT_BE_SET", "IMPORT_INVALID_RETENTION_DAYS_MUST_BE_POSITIVE", "IMPORT_INVALID_RETENTION_DAYS_EXCEEDS_LIMIT", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_MUST_BE_SET", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_MUST_NOT_BE_SET", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_INVALID_FORMAT", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_NO_SECONDS", "IMPORT_INVALID_RETENTION_EXPIRATION_DATE_EXCEEDS_LIMIT", "IMPORT_INVALID_RETENTION_MISSING_TYPE", "IMPORT_INVALID_RETENTION_MISSING_PREFERRED_TIMEZONE", "IMPORT_INVALID_RETENTION_EXPIRATION_IN_PAST", "IMPORT_CONTACT_LIST_NAME_LENGTH_EXCEEDED", "FAILED_TO_DELETE_CONTACT_LIST", "RESOURCE_NOT_FOUND", "INVALID_CONTACT_UPDATE", "ORGANIZATION_HAS_NO_DOMAIN_SET", "QUEUE_NOT_FOUND", "RECYCLE_CAMPAIGN", "SCHEDULED_CAMPAIGN_INVALID", "SCHEDULE_UNKNOWN_ERROR", "SMS_CONTENT_TEMPLATE_NOT_FOUND", "RECURRING_SCHEDULE_NEXT_OCCURRENCE_FAILURE", "RECURRING_SCHEDULE_ENDED", "RECURRING_SCHEDULE_MISSED_OCCURRENCES", "VERSION_CONFLICT"]
                 }, 
                 {
                     "name": "Message",
@@ -92157,7 +92441,7 @@
             "properties": [
                 {
                     "name": "Key",
-                    "description": "The key of the header (e.g., 'Subject', 'From', 'X-Custom-Header').",
+                    "description": "The key of the custom header (e.g., 'X-Custom-Header', 'X-Ticket-ID'). Restricted headers such as 'Subject', 'From', and 'Message-ID' are not allowed and will result in a 400 Bad Request.",
                     "dataType": "string"
                 }, 
                 {
@@ -103645,7 +103929,7 @@
                     "description": "Core language for knowledge base in which initial content must be created, language codes [en-US, en-UK, en-AU, de-DE] are supported currently. However, the new DX knowledge will support all these language codes, along with 'early preview' language codes [ca-ES, tr-TR, sv-SE, fi-FI, nb-NO, da-DK, ja-JP, ar-AE, zh-CN, zh-TW, zh-HK, ko-KR, pl-PL, hi-IN, th-TH, hu-HU, vi-VN, uk-UA] which might have a lower accuracy.",
                     "required": true,
                     "dataType": "string",
-                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR"]
+                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR", "ar-SA"]
                 }, 
                 {
                     "name": "DateCreated",
@@ -103714,7 +103998,7 @@
                     "description": "Core language for knowledge base in which initial content must be created, language codes [en-US, en-UK, en-AU, de-DE] are supported currently. However, the new DX knowledge will support all these language codes, along with 'early preview' language codes [ca-ES, tr-TR, sv-SE, fi-FI, nb-NO, da-DK, ja-JP, ar-AE, zh-CN, zh-TW, zh-HK, ko-KR, pl-PL, hi-IN, th-TH, hu-HU, vi-VN, uk-UA] which might have a lower accuracy.",
                     "required": true,
                     "dataType": "string",
-                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR"]
+                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR", "ar-SA"]
                 }, 
                 {
                     "name": "ContentSearchEnabled",
@@ -103755,7 +104039,7 @@
                     "name": "LanguageCode",
                     "description": "Language of the knowledge base",
                     "dataType": "string",
-                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR"]
+                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR", "ar-SA"]
                 }, 
                 {
                     "name": "ContentSearchEnabled",
@@ -105073,7 +105357,7 @@
                     "name": "Language",
                     "description": "The language of the documents.",
                     "dataType": "string",
-                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR"]
+                    "enum": ["en-US", "en-UK", "en-AU", "en-CA", "en-HK", "en-IN", "en-IE", "en-NZ", "en-PH", "en-SG", "en-ZA", "de-DE", "de-AT", "de-CH", "es-AR", "es-CO", "es-MX", "es-US", "es-ES", "fr-FR", "fr-BE", "fr-CA", "fr-CH", "pt-BR", "pt-PT", "nl-NL", "nl-BE", "it-IT", "ca-ES", "tr-TR", "sv-SE", "fi-FI", "nb-NO", "da-DK", "ja-JP", "ar-AE", "zh-CN", "zh-TW", "zh-HK", "ko-KR", "pl-PL", "hi-IN", "th-TH", "hu-HU", "vi-VN", "uk-UA", "cs-CZ", "fil-PH", "ms-MY", "he-IL", "el-GR", "ar-SA"]
                 }, 
                 {
                     "name": "AppType",
@@ -107407,6 +107691,15 @@
                     "description": "The URI for this object",
                     "readOnly": true,
                     "dataType": "string"
+                }
+            ]
+        }, 
+        "knowledgesettingdynamicfilter": { 
+            "properties": [
+                {
+                    "name": "Context",
+                    "description": "Filter based on copilot context values.",
+                    "dataType": "Copilotcontextfilter"
                 }
             ]
         }, 
@@ -123744,6 +124037,16 @@
                     "dataType": "time.Time"
                 }, 
                 {
+                    "name": "DateModified",
+                    "description": "The date and time the entity affected by the event was last modified. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                    "dataType": "time.Time"
+                }, 
+                {
+                    "name": "EntityModifiedBy",
+                    "description": "The unique identifier of the user who last modified the entity affected by the event.",
+                    "dataType": "string"
+                }, 
+                {
                     "name": "EntityVersion",
                     "description": "The version of the entity in the providing service",
                     "dataType": "string"
@@ -128003,6 +128306,22 @@
                     "name": "RescheduleTimeZoneSkippedContacts",
                     "description": "Whether or not to reschedule time-zone blocked contacts",
                     "dataType": "bool"
+                }, 
+                {
+                    "name": "ContactListDefaultRetentionType",
+                    "description": "The default type of retention for newly created contact lists and contact list templates. Valid values: Never, Today, RetentionDays.",
+                    "dataType": "string",
+                    "enum": ["Never", "Today", "RetentionDays"]
+                }, 
+                {
+                    "name": "ContactListDefaultRetentionDays",
+                    "description": "The default number of days to retain newly created contact lists and contact list templates. Only applicable when retentionType is RetentionDays.",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "TimeZone",
+                    "description": "The time zone for newly created lists' retention when option Today is used; for example, Africa/Abidjan. Time zones are represented as a string of the zone name as found in the IANA time zone database. For example: UTC, Etc/UTC, or Europe/London",
+                    "dataType": "string"
                 }, 
                 {
                     "name": "SelfUri",
@@ -134596,6 +134915,10 @@
                     "dataType": "int"
                 }, 
                 {
+                    "name": "Total",
+                    "dataType": "int"
+                }, 
+                {
                     "name": "SelfUri",
                     "dataType": "string"
                 }, 
@@ -134875,6 +135198,11 @@
                     "description": "The prompt name.",
                     "required": true,
                     "dataType": "string"
+                }, 
+                {
+                    "name": "Division",
+                    "description": "The division to which this entity belongs.",
+                    "dataType": "Writablestarrabledivision"
                 }, 
                 {
                     "name": "Description",
@@ -136158,6 +136486,22 @@
                 }
             ]
         }, 
+        "queryagentschedulingpreferencesrequest": { 
+            "properties": [
+                {
+                    "name": "StartDate",
+                    "description": "The earliest date to retrieve agent scheduling preferences. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                    "required": true,
+                    "dataType": "time.Time"
+                }, 
+                {
+                    "name": "EndDate",
+                    "description": "The latest date to retrieve agent scheduling preferences. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                    "required": true,
+                    "dataType": "time.Time"
+                }
+            ]
+        }, 
         "queryagentshifttradelistjobrequest": { 
             "properties": [
                 {
@@ -137163,6 +137507,11 @@
                     "name": "OnHoldPrompt",
                     "description": "The audio to be played when calls on this queue are on hold. If not configured, the default on-hold music will play.",
                     "dataType": "Domainentityref"
+                }, 
+                {
+                    "name": "DefaultMediaLanguage",
+                    "description": "The canonical language code (e.g. en-US) used for the default media language on the queue.",
+                    "dataType": "string"
                 }, 
                 {
                     "name": "AutoAnswerOnly",
@@ -148658,6 +149007,11 @@
                     "dataType": "Domainentityref"
                 }, 
                 {
+                    "name": "DefaultMediaLanguage",
+                    "description": "The canonical language code (e.g. en-US) used for the default media language on the queue.",
+                    "dataType": "string"
+                }, 
+                {
                     "name": "AutoAnswerOnly",
                     "description": "Specifies whether the configured whisper should play for all ACD calls, or only for those which are auto-answered.",
                     "dataType": "bool"
@@ -149166,6 +149520,11 @@
                     "name": "OnHoldPrompt",
                     "description": "The audio to be played when calls on this queue are on hold. If not configured, the default on-hold music will play.",
                     "dataType": "Domainentityref"
+                }, 
+                {
+                    "name": "DefaultMediaLanguage",
+                    "description": "The canonical language code (e.g. en-US) used for the default media language on the queue.",
+                    "dataType": "string"
                 }, 
                 {
                     "name": "AutoAnswerOnly",
@@ -151913,6 +152272,11 @@
         }, 
         "registerarchitectjobrequest": { 
             "properties": [
+                {
+                    "name": "CreateStubs",
+                    "description": "If true, flow stubs will be created for any dependencies during the job.",
+                    "dataType": "bool"
+                }
             ]
         }, 
         "registerarchitectjobresponse": { 
@@ -169051,7 +169415,7 @@
                     "name": "Dimension",
                     "description": "Left hand side for dimension predicates",
                     "dataType": "string",
-                    "enum": ["conversationId", "copied", "editedField", "errorType", "language", "mediaType", "messageType", "presented", "queueId", "summaryGenerated", "summaryId", "summaryRating", "triggerSourceId", "triggerSourceOutcome", "triggerSourceType", "userId", "wrapUpCodeRating", "wrapUpCodeSuggestionSelected", "wrapupCodesGenerated"]
+                    "enum": ["conversationId", "copied", "editedField", "errorType", "language", "mediaType", "messageType", "presented", "queueId", "summaryGenerated", "summaryId", "summaryRating", "triggerSourceId", "triggerSourceOutcome", "triggerSourceType", "triggerType", "userId", "wrapUpCodeRating", "wrapUpCodeSuggestionSelected", "wrapupCodesGenerated"]
                 }, 
                 {
                     "name": "Operator",
@@ -170299,6 +170663,11 @@
                     "description": "Validated email domain, required",
                     "required": true,
                     "dataType": "string"
+                }, 
+                {
+                    "name": "UseThreadingTimelineForSendTime",
+                    "description": "If true, the survey invitation send time will be calculated using the threading timeline. If false or unspecified, a fixed 72-hour delay will be used. Default is false for new policies.",
+                    "dataType": "bool"
                 }
             ]
         }, 
@@ -174309,7 +174678,7 @@
                 }, 
                 {
                     "name": "UserIds",
-                    "description": "The set of user ids to filter time off requests",
+                    "description": "The set of user ids to filter time off requests. Omit to query all users in the management unit. Note: If teamIds is also specified, only time off requests for users in the requested teams will be returned",
                     "dataType": "[]string"
                 }, 
                 {
@@ -174326,6 +174695,11 @@
                     "name": "DateRange",
                     "description": "The inclusive range of dates to filter time off requests",
                     "dataType": "Daterange"
+                }, 
+                {
+                    "name": "TeamIds",
+                    "description": "The IDs of work teams to query. If null or not set, results will be queried for requested users if applicable or otherwise all users in the management unit",
+                    "dataType": "[]string"
                 }
             ]
         }, 
@@ -175005,6 +175379,10 @@
                 }, 
                 {
                     "name": "PageSize",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "Total",
                     "dataType": "int"
                 }, 
                 {
@@ -179604,6 +179982,10 @@
                     "dataType": "int"
                 }, 
                 {
+                    "name": "Total",
+                    "dataType": "int"
+                }, 
+                {
                     "name": "SelfUri",
                     "dataType": "string"
                 }, 
@@ -179846,6 +180228,20 @@
                 }
             ]
         }, 
+        "updateagentschedulingpreferencesrequest": { 
+            "properties": [
+                {
+                    "name": "PreferencesToAdd",
+                    "description": "Scheduling preferences to add",
+                    "dataType": "[]Agentschedulingpreference"
+                }, 
+                {
+                    "name": "PreferenceIdsToRemove",
+                    "description": "IDs of scheduling preferences to remove",
+                    "dataType": "[]string"
+                }
+            ]
+        }, 
         "updateagentworkplanbiddingpreference": { 
             "properties": [
                 {
@@ -179913,6 +180309,15 @@
                     "name": "Settings",
                     "description": "Configuration for the business unit",
                     "dataType": "Updatebusinessunitsettingsrequest"
+                }
+            ]
+        }, 
+        "updatebusinessunitschedulingpreferencessettingsrequest": { 
+            "properties": [
+                {
+                    "name": "Enabled",
+                    "description": "Whether scheduling preferences are enabled for the business unit",
+                    "dataType": "bool"
                 }
             ]
         }, 
@@ -181734,6 +182139,63 @@
                 }
             ]
         }, 
+        "useractivity": { 
+            "properties": [
+                {
+                    "name": "Id",
+                    "description": "The ID of the user",
+                    "required": true,
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "RoutingStatus",
+                    "description": "The current routing status of the user",
+                    "dataType": "Useractivityroutingstatus"
+                }, 
+                {
+                    "name": "Presence",
+                    "description": "The current system presence of the user",
+                    "dataType": "Useractivityadherencepresence"
+                }, 
+                {
+                    "name": "OutOfOffice",
+                    "description": "The current out of office state of the user",
+                    "dataType": "Useractivityoutofoffice"
+                }, 
+                {
+                    "name": "ActiveQueueIds",
+                    "description": "The IDs of the queues for which the user is active",
+                    "required": true,
+                    "dataType": "[]string"
+                }, 
+                {
+                    "name": "DateActiveQueuesChanged",
+                    "description": "The date the activeQueueIds list was last modified. For reference only - subject to eventual consistency. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                    "dataType": "time.Time"
+                }
+            ]
+        }, 
+        "useractivityadherencepresence": { 
+            "properties": [
+                {
+                    "name": "PresenceDefinition",
+                    "description": "The current presence definition for the user",
+                    "required": true,
+                    "dataType": "Useractivitypresencedefinition"
+                }, 
+                {
+                    "name": "PresenceMessage",
+                    "description": "The free-form presence message the user has set, if any",
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "ModifiedDate",
+                    "description": "The date the presence was last modified, in ISO-8601 format",
+                    "required": true,
+                    "dataType": "time.Time"
+                }
+            ]
+        }, 
         "useractivitydata": { 
             "properties": [
                 {
@@ -181813,6 +182275,14 @@
                 }
             ]
         }, 
+        "useractivitylisting": { 
+            "properties": [
+                {
+                    "name": "Entities",
+                    "dataType": "[]Useractivity"
+                }
+            ]
+        }, 
         "useractivitymetricvalue": { 
             "properties": [
                 {
@@ -181835,6 +182305,37 @@
                     "name": "Count",
                     "description": "Metric count",
                     "dataType": "int"
+                }
+            ]
+        }, 
+        "useractivityoutofoffice": { 
+            "properties": [
+                {
+                    "name": "Active",
+                    "description": "Whether the user is currently out of office",
+                    "dataType": "bool"
+                }, 
+                {
+                    "name": "ModifiedDate",
+                    "description": "The date the out of office state was last modified. Date time is represented as an ISO-8601 string",
+                    "dataType": "time.Time"
+                }
+            ]
+        }, 
+        "useractivitypresencedefinition": { 
+            "properties": [
+                {
+                    "name": "Id",
+                    "description": "The globally unique identifier for the presence definition",
+                    "required": true,
+                    "dataType": "string"
+                }, 
+                {
+                    "name": "SystemPresence",
+                    "description": "The system presence to which this definition maps",
+                    "required": true,
+                    "dataType": "string",
+                    "enum": ["AVAILABLE", "AWAY", "BUSY", "OFFLINE", "IDLE", "ON_QUEUE", "MEAL", "TRAINING", "MEETING", "BREAK"]
                 }
             ]
         }, 
@@ -181958,6 +182459,23 @@
                     "description": "Dimension that is used as an entityId",
                     "dataType": "string",
                     "enum": ["organizationPresenceId", "presenceDate", "queueId", "queueMembershipStatus", "routingStatus", "routingStatusDate", "systemPresence", "teamId", "userId"]
+                }
+            ]
+        }, 
+        "useractivityroutingstatus": { 
+            "properties": [
+                {
+                    "name": "Status",
+                    "description": "Indicates the current routing status of the agent",
+                    "required": true,
+                    "dataType": "string",
+                    "enum": ["OFF_QUEUE", "IDLE", "INTERACTING", "NOT_RESPONDING", "COMMUNICATING"]
+                }, 
+                {
+                    "name": "StartTime",
+                    "description": "The timestamp when the agent went into this state. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                    "required": true,
+                    "dataType": "time.Time"
                 }
             ]
         }, 
@@ -184482,6 +185000,11 @@
                     "dataType": "Domainentityref"
                 }, 
                 {
+                    "name": "DefaultMediaLanguage",
+                    "description": "The canonical language code (e.g. en-US) used for the default media language on the queue.",
+                    "dataType": "string"
+                }, 
+                {
                     "name": "CannedResponseLibraries",
                     "description": "Canned response library IDs and mode with which they are associated with the queue",
                     "dataType": "Cannedresponselibraries"
@@ -185015,6 +185538,16 @@
                 {
                     "name": "ErrorInfo",
                     "dataType": "Userroutingstatuserrorinfo"
+                }
+            ]
+        }, 
+        "usersactivityrequest": { 
+            "properties": [
+                {
+                    "name": "UserIds",
+                    "description": "The IDs of the users for whom to fetch their current activity state",
+                    "required": true,
+                    "dataType": "[]string"
                 }
             ]
         }, 
@@ -190125,6 +190658,11 @@
                     "name": "ListVariables",
                     "description": "The variables that the list result will be stored in. Only applicable when type is 'List'.",
                     "dataType": "[]Variable"
+                }, 
+                {
+                    "name": "CustomConversationAttributes",
+                    "description": "The Conversation Custom Attributes (CCA) for this variable. When present, the variable value is bound to the specified conversation attributes.",
+                    "dataType": "[]Conversationattribute"
                 }
             ]
         }, 
@@ -199844,8 +200382,7 @@
                 }, 
                 {
                     "name": "PhoneNumber",
-                    "description": "Phone number to associate with the WhatsApp integration",
-                    "required": true,
+                    "description": "E.164 phone number to associate with the WhatsApp integration. Not required for embedded signup v4 or later.",
                     "dataType": "string"
                 }, 
                 {
@@ -199872,8 +200409,7 @@
                 }, 
                 {
                     "name": "Name",
-                    "description": "The name of the WhatsApp Integration",
-                    "required": true,
+                    "description": "The name of the WhatsApp Integration. Required for Embedded Signup v2; optional for v4 (set later via PATCH).",
                     "dataType": "string"
                 }, 
                 {
@@ -199888,8 +200424,7 @@
                 }, 
                 {
                     "name": "EmbeddedSignupAccessToken",
-                    "description": "The access token returned from the embedded signup flow",
-                    "required": true,
+                    "description": "The access token returned from the embedded signup flow. Not required for versions v4 or later.",
                     "dataType": "string"
                 }, 
                 {
@@ -202197,14 +202732,19 @@
             "properties": [
                 {
                     "name": "Name",
-                    "description": "Specify an attribute for sorting.",
+                    "description": "Specify an attribute for sorting. Use 'customFields' to sort by a custom field, in which case the customField property is required.",
                     "dataType": "string",
-                    "enum": ["dateDue", "dateCreated", "priority"]
+                    "enum": ["dateDue", "dateCreated", "priority", "customFields"]
                 }, 
                 {
                     "name": "Ascending",
                     "description": "Sort Ascending",
                     "dataType": "bool"
+                }, 
+                {
+                    "name": "CustomField",
+                    "description": "The key of the custom field to sort by. Required when name is 'customFields' and must not be set otherwise.",
+                    "dataType": "string"
                 }
             ]
         }, 
@@ -207121,6 +207661,22 @@
                     "description": "Timestamp for when the contact was added. Contacts added prior to 2023 September 1 may be missing this value. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
                     "readOnly": true,
                     "dataType": "time.Time"
+                }, 
+                {
+                    "name": "RetentionType",
+                    "description": "The type of retention for this contact. Valid values: Never, Today, RetentionDays, DateExpiration",
+                    "dataType": "string",
+                    "enum": ["Never", "Today", "RetentionDays", "DateExpiration"]
+                }, 
+                {
+                    "name": "RetentionDays",
+                    "description": "The number of days to retain this contact. Required when retentionType is RetentionDays.",
+                    "dataType": "int"
+                }, 
+                {
+                    "name": "DateExpiration",
+                    "description": "The expiration date of the contact. Required when retentionType is DateExpiration. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                    "dataType": "time.Time"
                 }
             ]
         }, 
@@ -211902,7 +212458,7 @@
             "className": "ArchitectApi",
             "operationId": "getarchitectprompts",
             "functionName": "GetArchitectPrompts",
-            "signature": "GetArchitectPrompts(pageNumber, pageSize, name, description, nameOrDescription, sortBy, sortOrder, includeMediaUris, includeResources, language)",
+            "signature": "GetArchitectPrompts(pageNumber, pageSize, name, description, nameOrDescription, sortBy, sortOrder, includeMediaUris, includeResources, language, divisionId)",
             "parameters": [
                 {
                     "name": "pageNumber",
@@ -211951,6 +212507,11 @@
                 },
                 {
                     "name": "language",
+                    "type": "[]string",
+                    "required": "false"
+                },
+                {
+                    "name": "divisionId",
                     "type": "[]string",
                     "required": "false"
                 }
@@ -214108,7 +214669,7 @@
             "parameters": [
                 {
                     "name": "body",
-                    "type": "interface{}",
+                    "type": "Registerarchitectjobrequest",
                     "required": "false"
                 }
             ],
@@ -245369,7 +245930,7 @@
             "className": "OutboundApi",
             "operationId": "getoutboundcontactlists",
             "functionName": "GetOutboundContactlists",
-            "signature": "GetOutboundContactlists(includeImportStatus, includeSize, pageSize, pageNumber, allowEmptyResult, filterType, name, id, divisionId, sortBy, sortOrder)",
+            "signature": "GetOutboundContactlists(includeImportStatus, includeSize, pageSize, pageNumber, allowEmptyResult, filterType, name, id, divisionId, timeZone, dateExpiration, sortBy, sortOrder)",
             "parameters": [
                 {
                     "name": "includeImportStatus",
@@ -245413,6 +245974,16 @@
                 },
                 {
                     "name": "divisionId",
+                    "type": "[]string",
+                    "required": "false"
+                },
+                {
+                    "name": "timeZone",
+                    "type": "string",
+                    "required": "false"
+                },
+                {
+                    "name": "dateExpiration",
                     "type": "[]string",
                     "required": "false"
                 },
@@ -245525,7 +246096,7 @@
             "className": "OutboundApi",
             "operationId": "getoutboundcontactlisttemplates",
             "functionName": "GetOutboundContactlisttemplates",
-            "signature": "GetOutboundContactlisttemplates(pageSize, pageNumber, allowEmptyResult, filterType, name, sortBy, sortOrder)",
+            "signature": "GetOutboundContactlisttemplates(pageSize, pageNumber, allowEmptyResult, filterType, name, timeZone, sortBy, sortOrder)",
             "parameters": [
                 {
                     "name": "pageSize",
@@ -245549,6 +246120,11 @@
                 },
                 {
                     "name": "name",
+                    "type": "string",
+                    "required": "false"
+                },
+                {
+                    "name": "timeZone",
                     "type": "string",
                     "required": "false"
                 },
@@ -246947,6 +247523,20 @@
                 }
             ],
             "return": "Contactlist"
+        },
+        "POST /api/v2/outbound/contactlists/bulk/update": {
+            "className": "OutboundApi",
+            "operationId": "postoutboundcontactlistsbulkupdate",
+            "functionName": "PostOutboundContactlistsBulkUpdate",
+            "signature": "PostOutboundContactlistsBulkUpdate(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Contactlistsbulkeditrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Contactlistsbulkeditresponse"
         },
         "POST /api/v2/outbound/contactlists/uploads": {
             "className": "OutboundApi",
@@ -269943,6 +270533,20 @@
             ],
             "return": "Buschedulerunlisting"
         },
+        "GET /api/v2/workforcemanagement/businessunits/{businessUnitId}/schedulingpreferences/settings": {
+            "className": "WorkforceManagementApi",
+            "operationId": "getworkforcemanagementbusinessunitschedulingpreferencessettings",
+            "functionName": "GetWorkforcemanagementBusinessunitSchedulingpreferencesSettings",
+            "signature": "GetWorkforcemanagementBusinessunitSchedulingpreferencesSettings(businessUnitId)",
+            "parameters": [
+                {
+                    "name": "businessUnitId",
+                    "type": "string",
+                    "required": "true"
+                }
+            ],
+            "return": "Businessunitschedulingpreferencessettingsresponse"
+        },
         "GET /api/v2/workforcemanagement/businessunits/{businessUnitId}/servicegoaltemplates/{serviceGoalTemplateId}": {
             "className": "WorkforceManagementApi",
             "operationId": "getworkforcemanagementbusinessunitservicegoaltemplate",
@@ -271477,6 +272081,14 @@
             ],
             "return": "Schedulingstatusresponse"
         },
+        "GET /api/v2/workforcemanagement/schedulingpreferences/settings": {
+            "className": "WorkforceManagementApi",
+            "operationId": "getworkforcemanagementschedulingpreferencessettings",
+            "functionName": "GetWorkforcemanagementSchedulingpreferencesSettings",
+            "signature": "GetWorkforcemanagementSchedulingpreferencesSettings()",
+            
+            "return": "Businessunitschedulingpreferencessettingsresponse"
+        },
         "GET /api/v2/workforcemanagement/shifttrades": {
             "className": "WorkforceManagementApi",
             "operationId": "getworkforcemanagementshifttrades",
@@ -272102,6 +272714,25 @@
                 }
             ]
         },
+        "PATCH /api/v2/workforcemanagement/businessunits/{businessUnitId}/schedulingpreferences/settings": {
+            "className": "WorkforceManagementApi",
+            "operationId": "patchworkforcemanagementbusinessunitschedulingpreferencessettings",
+            "functionName": "PatchWorkforcemanagementBusinessunitSchedulingpreferencesSettings",
+            "signature": "PatchWorkforcemanagementBusinessunitSchedulingpreferencesSettings(businessUnitId, body)",
+            "parameters": [
+                {
+                    "name": "businessUnitId",
+                    "type": "string",
+                    "required": "true"
+                },
+                {
+                    "name": "body",
+                    "type": "Updatebusinessunitschedulingpreferencessettingsrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Businessunitschedulingpreferencessettingsresponse"
+        },
         "PATCH /api/v2/workforcemanagement/businessunits/{businessUnitId}/servicegoaltemplates/{serviceGoalTemplateId}": {
             "className": "WorkforceManagementApi",
             "operationId": "patchworkforcemanagementbusinessunitservicegoaltemplate",
@@ -272519,6 +273150,20 @@
             ],
             "return": "Workplanrotationresponse"
         },
+        "PATCH /api/v2/workforcemanagement/schedulingpreferences": {
+            "className": "WorkforceManagementApi",
+            "operationId": "patchworkforcemanagementschedulingpreferences",
+            "functionName": "PatchWorkforcemanagementSchedulingpreferences",
+            "signature": "PatchWorkforcemanagementSchedulingpreferences(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Updateagentschedulingpreferencesrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Agentschedulingpreferencelisting"
+        },
         "PATCH /api/v2/workforcemanagement/timeoffrequests/{timeOffRequestId}": {
             "className": "WorkforceManagementApi",
             "operationId": "patchworkforcemanagementtimeoffrequest",
@@ -272703,6 +273348,25 @@
                 }
             ],
             "return": "Agentqueryadherenceexplanationsresponse"
+        },
+        "POST /api/v2/workforcemanagement/agents/{agentId}/schedulingpreferences/query": {
+            "className": "WorkforceManagementApi",
+            "operationId": "postworkforcemanagementagentschedulingpreferencesquery",
+            "functionName": "PostWorkforcemanagementAgentSchedulingpreferencesQuery",
+            "signature": "PostWorkforcemanagementAgentSchedulingpreferencesQuery(agentId, body)",
+            "parameters": [
+                {
+                    "name": "agentId",
+                    "type": "string",
+                    "required": "true"
+                },
+                {
+                    "name": "body",
+                    "type": "Queryagentschedulingpreferencesrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Agentschedulingpreferencelisting"
         },
         "POST /api/v2/workforcemanagement/agents/{agentId}/unavailabletimes/query": {
             "className": "WorkforceManagementApi",
@@ -275189,6 +275853,20 @@
             ],
             "return": "Userschedulecontainer"
         },
+        "POST /api/v2/workforcemanagement/schedulingpreferences/query": {
+            "className": "WorkforceManagementApi",
+            "operationId": "postworkforcemanagementschedulingpreferencesquery",
+            "functionName": "PostWorkforcemanagementSchedulingpreferencesQuery",
+            "signature": "PostWorkforcemanagementSchedulingpreferencesQuery(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Queryagentschedulingpreferencesrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Agentschedulingpreferencelisting"
+        },
         "POST /api/v2/workforcemanagement/shifttrading/trades/{tradeId}/jobs": {
             "className": "WorkforceManagementApi",
             "operationId": "postworkforcemanagementshifttradingtradejobs",
@@ -275444,6 +276122,20 @@
                 }
             ],
             "return": "Validateagentunavailabletimesresponse"
+        },
+        "POST /api/v2/workforcemanagement/users/activity": {
+            "className": "WorkforceManagementApi",
+            "operationId": "postworkforcemanagementusersactivity",
+            "functionName": "PostWorkforcemanagementUsersActivity",
+            "signature": "PostWorkforcemanagementUsersActivity(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Usersactivityrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Useractivitylisting"
         },
         "PUT /api/v2/workforcemanagement/agents/{agentId}/integrations/hris": {
             "className": "WorkforceManagementApi",
@@ -280261,7 +280953,7 @@
             "className": "ArchitectApi",
             "operationId": "getarchitectprompts",
             "functionName": "GetArchitectPrompts",
-            "signature": "GetArchitectPrompts(pageNumber, pageSize, name, description, nameOrDescription, sortBy, sortOrder, includeMediaUris, includeResources, language)",
+            "signature": "GetArchitectPrompts(pageNumber, pageSize, name, description, nameOrDescription, sortBy, sortOrder, includeMediaUris, includeResources, language, divisionId)",
             "parameters": [
                 {
                     "name": "pageNumber",
@@ -280310,6 +281002,11 @@
                 },
                 {
                     "name": "language",
+                    "type": "[]string",
+                    "required": "false"
+                },
+                {
+                    "name": "divisionId",
                     "type": "[]string",
                     "required": "false"
                 }
@@ -282467,7 +283164,7 @@
             "parameters": [
                 {
                     "name": "body",
-                    "type": "interface{}",
+                    "type": "Registerarchitectjobrequest",
                     "required": "false"
                 }
             ],
@@ -313728,7 +314425,7 @@
             "className": "OutboundApi",
             "operationId": "getoutboundcontactlists",
             "functionName": "GetOutboundContactlists",
-            "signature": "GetOutboundContactlists(includeImportStatus, includeSize, pageSize, pageNumber, allowEmptyResult, filterType, name, id, divisionId, sortBy, sortOrder)",
+            "signature": "GetOutboundContactlists(includeImportStatus, includeSize, pageSize, pageNumber, allowEmptyResult, filterType, name, id, divisionId, timeZone, dateExpiration, sortBy, sortOrder)",
             "parameters": [
                 {
                     "name": "includeImportStatus",
@@ -313772,6 +314469,16 @@
                 },
                 {
                     "name": "divisionId",
+                    "type": "[]string",
+                    "required": "false"
+                },
+                {
+                    "name": "timeZone",
+                    "type": "string",
+                    "required": "false"
+                },
+                {
+                    "name": "dateExpiration",
                     "type": "[]string",
                     "required": "false"
                 },
@@ -313884,7 +314591,7 @@
             "className": "OutboundApi",
             "operationId": "getoutboundcontactlisttemplates",
             "functionName": "GetOutboundContactlisttemplates",
-            "signature": "GetOutboundContactlisttemplates(pageSize, pageNumber, allowEmptyResult, filterType, name, sortBy, sortOrder)",
+            "signature": "GetOutboundContactlisttemplates(pageSize, pageNumber, allowEmptyResult, filterType, name, timeZone, sortBy, sortOrder)",
             "parameters": [
                 {
                     "name": "pageSize",
@@ -313908,6 +314615,11 @@
                 },
                 {
                     "name": "name",
+                    "type": "string",
+                    "required": "false"
+                },
+                {
+                    "name": "timeZone",
                     "type": "string",
                     "required": "false"
                 },
@@ -315306,6 +316018,20 @@
                 }
             ],
             "return": "Contactlist"
+        },
+        "POST /api/v2/outbound/contactlists/bulk/update": {
+            "className": "OutboundApi",
+            "operationId": "postoutboundcontactlistsbulkupdate",
+            "functionName": "PostOutboundContactlistsBulkUpdate",
+            "signature": "PostOutboundContactlistsBulkUpdate(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Contactlistsbulkeditrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Contactlistsbulkeditresponse"
         },
         "POST /api/v2/outbound/contactlists/uploads": {
             "className": "OutboundApi",
@@ -338302,6 +339028,20 @@
             ],
             "return": "Buschedulerunlisting"
         },
+        "GET /api/v2/workforcemanagement/businessunits/{businessUnitId}/schedulingpreferences/settings": {
+            "className": "WorkforceManagementApi",
+            "operationId": "getworkforcemanagementbusinessunitschedulingpreferencessettings",
+            "functionName": "GetWorkforcemanagementBusinessunitSchedulingpreferencesSettings",
+            "signature": "GetWorkforcemanagementBusinessunitSchedulingpreferencesSettings(businessUnitId)",
+            "parameters": [
+                {
+                    "name": "businessUnitId",
+                    "type": "string",
+                    "required": "true"
+                }
+            ],
+            "return": "Businessunitschedulingpreferencessettingsresponse"
+        },
         "GET /api/v2/workforcemanagement/businessunits/{businessUnitId}/servicegoaltemplates/{serviceGoalTemplateId}": {
             "className": "WorkforceManagementApi",
             "operationId": "getworkforcemanagementbusinessunitservicegoaltemplate",
@@ -339836,6 +340576,14 @@
             ],
             "return": "Schedulingstatusresponse"
         },
+        "GET /api/v2/workforcemanagement/schedulingpreferences/settings": {
+            "className": "WorkforceManagementApi",
+            "operationId": "getworkforcemanagementschedulingpreferencessettings",
+            "functionName": "GetWorkforcemanagementSchedulingpreferencesSettings",
+            "signature": "GetWorkforcemanagementSchedulingpreferencesSettings()",
+            
+            "return": "Businessunitschedulingpreferencessettingsresponse"
+        },
         "GET /api/v2/workforcemanagement/shifttrades": {
             "className": "WorkforceManagementApi",
             "operationId": "getworkforcemanagementshifttrades",
@@ -340461,6 +341209,25 @@
                 }
             ]
         },
+        "PATCH /api/v2/workforcemanagement/businessunits/{businessUnitId}/schedulingpreferences/settings": {
+            "className": "WorkforceManagementApi",
+            "operationId": "patchworkforcemanagementbusinessunitschedulingpreferencessettings",
+            "functionName": "PatchWorkforcemanagementBusinessunitSchedulingpreferencesSettings",
+            "signature": "PatchWorkforcemanagementBusinessunitSchedulingpreferencesSettings(businessUnitId, body)",
+            "parameters": [
+                {
+                    "name": "businessUnitId",
+                    "type": "string",
+                    "required": "true"
+                },
+                {
+                    "name": "body",
+                    "type": "Updatebusinessunitschedulingpreferencessettingsrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Businessunitschedulingpreferencessettingsresponse"
+        },
         "PATCH /api/v2/workforcemanagement/businessunits/{businessUnitId}/servicegoaltemplates/{serviceGoalTemplateId}": {
             "className": "WorkforceManagementApi",
             "operationId": "patchworkforcemanagementbusinessunitservicegoaltemplate",
@@ -340878,6 +341645,20 @@
             ],
             "return": "Workplanrotationresponse"
         },
+        "PATCH /api/v2/workforcemanagement/schedulingpreferences": {
+            "className": "WorkforceManagementApi",
+            "operationId": "patchworkforcemanagementschedulingpreferences",
+            "functionName": "PatchWorkforcemanagementSchedulingpreferences",
+            "signature": "PatchWorkforcemanagementSchedulingpreferences(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Updateagentschedulingpreferencesrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Agentschedulingpreferencelisting"
+        },
         "PATCH /api/v2/workforcemanagement/timeoffrequests/{timeOffRequestId}": {
             "className": "WorkforceManagementApi",
             "operationId": "patchworkforcemanagementtimeoffrequest",
@@ -341062,6 +341843,25 @@
                 }
             ],
             "return": "Agentqueryadherenceexplanationsresponse"
+        },
+        "POST /api/v2/workforcemanagement/agents/{agentId}/schedulingpreferences/query": {
+            "className": "WorkforceManagementApi",
+            "operationId": "postworkforcemanagementagentschedulingpreferencesquery",
+            "functionName": "PostWorkforcemanagementAgentSchedulingpreferencesQuery",
+            "signature": "PostWorkforcemanagementAgentSchedulingpreferencesQuery(agentId, body)",
+            "parameters": [
+                {
+                    "name": "agentId",
+                    "type": "string",
+                    "required": "true"
+                },
+                {
+                    "name": "body",
+                    "type": "Queryagentschedulingpreferencesrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Agentschedulingpreferencelisting"
         },
         "POST /api/v2/workforcemanagement/agents/{agentId}/unavailabletimes/query": {
             "className": "WorkforceManagementApi",
@@ -343548,6 +344348,20 @@
             ],
             "return": "Userschedulecontainer"
         },
+        "POST /api/v2/workforcemanagement/schedulingpreferences/query": {
+            "className": "WorkforceManagementApi",
+            "operationId": "postworkforcemanagementschedulingpreferencesquery",
+            "functionName": "PostWorkforcemanagementSchedulingpreferencesQuery",
+            "signature": "PostWorkforcemanagementSchedulingpreferencesQuery(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Queryagentschedulingpreferencesrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Agentschedulingpreferencelisting"
+        },
         "POST /api/v2/workforcemanagement/shifttrading/trades/{tradeId}/jobs": {
             "className": "WorkforceManagementApi",
             "operationId": "postworkforcemanagementshifttradingtradejobs",
@@ -343803,6 +344617,20 @@
                 }
             ],
             "return": "Validateagentunavailabletimesresponse"
+        },
+        "POST /api/v2/workforcemanagement/users/activity": {
+            "className": "WorkforceManagementApi",
+            "operationId": "postworkforcemanagementusersactivity",
+            "functionName": "PostWorkforcemanagementUsersActivity",
+            "signature": "PostWorkforcemanagementUsersActivity(body)",
+            "parameters": [
+                {
+                    "name": "body",
+                    "type": "Usersactivityrequest",
+                    "required": "true"
+                }
+            ],
+            "return": "Useractivitylisting"
         },
         "PUT /api/v2/workforcemanagement/agents/{agentId}/integrations/hris": {
             "className": "WorkforceManagementApi",

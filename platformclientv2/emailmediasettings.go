@@ -25,6 +25,9 @@ type Emailmediasettings struct {
 
 	// ManualAnswerAlertToneSeconds - How long to play the alerting tone for a manual-answer interaction
 	ManualAnswerAlertToneSeconds *float64 `json:"manualAnswerAlertToneSeconds,omitempty"`
+
+	// AllOutboundEmailAddresses - The list of email addresses that are assigned to the queue and can be used by agents as an outbound email address.
+	AllOutboundEmailAddresses *[]Queueemailaddress `json:"allOutboundEmailAddresses,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -99,6 +102,8 @@ func (o Emailmediasettings) MarshalJSON() ([]byte, error) {
 		AutoAnswerAlertToneSeconds *float64 `json:"autoAnswerAlertToneSeconds,omitempty"`
 		
 		ManualAnswerAlertToneSeconds *float64 `json:"manualAnswerAlertToneSeconds,omitempty"`
+		
+		AllOutboundEmailAddresses *[]Queueemailaddress `json:"allOutboundEmailAddresses,omitempty"`
 		Alias
 	}{ 
 		EnableAutoAnswer: o.EnableAutoAnswer,
@@ -110,6 +115,8 @@ func (o Emailmediasettings) MarshalJSON() ([]byte, error) {
 		AutoAnswerAlertToneSeconds: o.AutoAnswerAlertToneSeconds,
 		
 		ManualAnswerAlertToneSeconds: o.ManualAnswerAlertToneSeconds,
+		
+		AllOutboundEmailAddresses: o.AllOutboundEmailAddresses,
 		Alias:    (Alias)(o),
 	})
 }
@@ -143,6 +150,11 @@ func (o *Emailmediasettings) UnmarshalJSON(b []byte) error {
 		o.ManualAnswerAlertToneSeconds = &ManualAnswerAlertToneSeconds
 	}
     
+	if AllOutboundEmailAddresses, ok := EmailmediasettingsMap["allOutboundEmailAddresses"].([]interface{}); ok {
+		AllOutboundEmailAddressesString, _ := json.Marshal(AllOutboundEmailAddresses)
+		json.Unmarshal(AllOutboundEmailAddressesString, &o.AllOutboundEmailAddresses)
+	}
+	
 
 	return nil
 }

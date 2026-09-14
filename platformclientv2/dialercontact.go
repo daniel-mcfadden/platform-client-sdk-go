@@ -54,6 +54,15 @@ type Dialercontact struct {
 	// DateCreated - Timestamp for when the contact was added. Contacts added prior to 2023 September 1 may be missing this value. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z
 	DateCreated *time.Time `json:"dateCreated,omitempty"`
 
+	// RetentionType - The type of retention for this contact. Valid values: Never, Today, RetentionDays, DateExpiration
+	RetentionType *string `json:"retentionType,omitempty"`
+
+	// RetentionDays - The number of days to retain this contact. Required when retentionType is RetentionDays.
+	RetentionDays *int `json:"retentionDays,omitempty"`
+
+	// DateExpiration - The expiration date of the contact. Required when retentionType is DateExpiration. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z
+	DateExpiration *time.Time `json:"dateExpiration,omitempty"`
+
 	// SelfUri - The URI for this object
 	SelfUri *string `json:"selfUri,omitempty"`
 }
@@ -87,7 +96,7 @@ func (o Dialercontact) MarshalJSON() ([]byte, error) {
 		val := reflect.ValueOf(o)
 
 		// Known field names that require type overrides
-		dateTimeFields := []string{ "DateCreated", }
+		dateTimeFields := []string{ "DateCreated","DateExpiration", }
 		localDateTimeFields := []string{  }
 		dateFields := []string{  }
 
@@ -128,6 +137,14 @@ func (o Dialercontact) MarshalJSON() ([]byte, error) {
 		DateCreated = nil
 	}
 	
+	DateExpiration := new(string)
+	if o.DateExpiration != nil {
+		
+		*DateExpiration = timeutil.Strftime(o.DateExpiration, "%Y-%m-%dT%H:%M:%S.%fZ")
+	} else {
+		DateExpiration = nil
+	}
+	
 	return json.Marshal(&struct { 
 		Id *string `json:"id,omitempty"`
 		
@@ -156,6 +173,12 @@ func (o Dialercontact) MarshalJSON() ([]byte, error) {
 		ConfigurationOverrides *Configurationoverrides `json:"configurationOverrides,omitempty"`
 		
 		DateCreated *string `json:"dateCreated,omitempty"`
+		
+		RetentionType *string `json:"retentionType,omitempty"`
+		
+		RetentionDays *int `json:"retentionDays,omitempty"`
+		
+		DateExpiration *string `json:"dateExpiration,omitempty"`
 		
 		SelfUri *string `json:"selfUri,omitempty"`
 		Alias
@@ -187,6 +210,12 @@ func (o Dialercontact) MarshalJSON() ([]byte, error) {
 		ConfigurationOverrides: o.ConfigurationOverrides,
 		
 		DateCreated: DateCreated,
+		
+		RetentionType: o.RetentionType,
+		
+		RetentionDays: o.RetentionDays,
+		
+		DateExpiration: DateExpiration,
 		
 		SelfUri: o.SelfUri,
 		Alias:    (Alias)(o),
@@ -264,6 +293,20 @@ func (o *Dialercontact) UnmarshalJSON(b []byte) error {
 	if dateCreatedString, ok := DialercontactMap["dateCreated"].(string); ok {
 		DateCreated, _ := time.Parse("2006-01-02T15:04:05.999999Z", dateCreatedString)
 		o.DateCreated = &DateCreated
+	}
+	
+	if RetentionType, ok := DialercontactMap["retentionType"].(string); ok {
+		o.RetentionType = &RetentionType
+	}
+    
+	if RetentionDays, ok := DialercontactMap["retentionDays"].(float64); ok {
+		RetentionDaysInt := int(RetentionDays)
+		o.RetentionDays = &RetentionDaysInt
+	}
+	
+	if dateExpirationString, ok := DialercontactMap["dateExpiration"].(string); ok {
+		DateExpiration, _ := time.Parse("2006-01-02T15:04:05.999999Z", dateExpirationString)
+		o.DateExpiration = &DateExpiration
 	}
 	
 	if SelfUri, ok := DialercontactMap["selfUri"].(string); ok {

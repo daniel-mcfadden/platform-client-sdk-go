@@ -60,6 +60,15 @@ type Contactlisttemplate struct {
 	// TrimWhitespace - Whether to trim white space when importing a ContactListTemplate csv file, default value = true
 	TrimWhitespace *bool `json:"trimWhitespace,omitempty"`
 
+	// RetentionType - The type of retention for this ContactListTemplate. Valid values: Never, Today, RetentionDays
+	RetentionType *string `json:"retentionType,omitempty"`
+
+	// RetentionDays - The number of days to retain contact lists created from this template. Required when retentionType is RetentionDays.
+	RetentionDays *int `json:"retentionDays,omitempty"`
+
+	// TimeZone - The time zone for this contact list template; for example, Africa/Abidjan. Time zones are represented as a string of the zone name as found in the IANA time zone database. For example: UTC, Etc/UTC, or Europe/London
+	TimeZone *string `json:"timeZone,omitempty"`
+
 	// SelfUri - The URI for this object
 	SelfUri *string `json:"selfUri,omitempty"`
 }
@@ -175,6 +184,12 @@ func (o Contactlisttemplate) MarshalJSON() ([]byte, error) {
 		
 		TrimWhitespace *bool `json:"trimWhitespace,omitempty"`
 		
+		RetentionType *string `json:"retentionType,omitempty"`
+		
+		RetentionDays *int `json:"retentionDays,omitempty"`
+		
+		TimeZone *string `json:"timeZone,omitempty"`
+		
 		SelfUri *string `json:"selfUri,omitempty"`
 		Alias
 	}{ 
@@ -209,6 +224,12 @@ func (o Contactlisttemplate) MarshalJSON() ([]byte, error) {
 		ColumnDataTypeSpecifications: o.ColumnDataTypeSpecifications,
 		
 		TrimWhitespace: o.TrimWhitespace,
+		
+		RetentionType: o.RetentionType,
+		
+		RetentionDays: o.RetentionDays,
+		
+		TimeZone: o.TimeZone,
 		
 		SelfUri: o.SelfUri,
 		Alias:    (Alias)(o),
@@ -294,6 +315,19 @@ func (o *Contactlisttemplate) UnmarshalJSON(b []byte) error {
 	
 	if TrimWhitespace, ok := ContactlisttemplateMap["trimWhitespace"].(bool); ok {
 		o.TrimWhitespace = &TrimWhitespace
+	}
+    
+	if RetentionType, ok := ContactlisttemplateMap["retentionType"].(string); ok {
+		o.RetentionType = &RetentionType
+	}
+    
+	if RetentionDays, ok := ContactlisttemplateMap["retentionDays"].(float64); ok {
+		RetentionDaysInt := int(RetentionDays)
+		o.RetentionDays = &RetentionDaysInt
+	}
+	
+	if TimeZone, ok := ContactlisttemplateMap["timeZone"].(string); ok {
+		o.TimeZone = &TimeZone
 	}
     
 	if SelfUri, ok := ContactlisttemplateMap["selfUri"].(string); ok {

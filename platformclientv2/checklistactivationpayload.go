@@ -40,6 +40,9 @@ type Checklistactivationpayload struct {
 
 	// Direction - Direction of the conversation.
 	Direction *string `json:"direction,omitempty"`
+
+	// Preview - Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.
+	Preview *bool `json:"preview,omitempty"`
 }
 
 // SetField uses reflection to set a field on the model if the model has a property SetFieldNames, and triggers custom JSON serialization logic to only serialize properties that have been set using this function.
@@ -124,6 +127,8 @@ func (o Checklistactivationpayload) MarshalJSON() ([]byte, error) {
 		MediaType *string `json:"mediaType,omitempty"`
 		
 		Direction *string `json:"direction,omitempty"`
+		
+		Preview *bool `json:"preview,omitempty"`
 		Alias
 	}{ 
 		ActivationTriggerType: o.ActivationTriggerType,
@@ -145,6 +150,8 @@ func (o Checklistactivationpayload) MarshalJSON() ([]byte, error) {
 		MediaType: o.MediaType,
 		
 		Direction: o.Direction,
+		
+		Preview: o.Preview,
 		Alias:    (Alias)(o),
 	})
 }
@@ -194,6 +201,10 @@ func (o *Checklistactivationpayload) UnmarshalJSON(b []byte) error {
     
 	if Direction, ok := ChecklistactivationpayloadMap["direction"].(string); ok {
 		o.Direction = &Direction
+	}
+    
+	if Preview, ok := ChecklistactivationpayloadMap["preview"].(bool); ok {
+		o.Preview = &Preview
 	}
     
 

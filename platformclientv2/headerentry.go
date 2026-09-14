@@ -11,7 +11,7 @@ import (
 type Headerentry struct { 
 	// SetFieldNames defines the list of fields to use for controlled JSON serialization
 	SetFieldNames map[string]bool `json:"-"`
-	// Key - The key of the header (e.g., 'Subject', 'From', 'X-Custom-Header').
+	// Key - The key of the custom header (e.g., 'X-Custom-Header', 'X-Ticket-ID'). Restricted headers such as 'Subject', 'From', and 'Message-ID' are not allowed and will result in a 400 Bad Request.
 	Key *string `json:"key,omitempty"`
 
 	// Value - The value of the header.

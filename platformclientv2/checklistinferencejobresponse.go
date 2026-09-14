@@ -51,6 +51,9 @@ type Checklistinferencejobresponse struct {
 	// Direction - Direction of the conversation.
 	Direction *string `json:"direction,omitempty"`
 
+	// Preview - Whether this checklist session is a preview. Preview sessions use shorter TTL and do not publish runtime events.
+	Preview *bool `json:"preview,omitempty"`
+
 	// SelfUri - The URI for this object
 	SelfUri *string `json:"selfUri,omitempty"`
 }
@@ -160,6 +163,8 @@ func (o Checklistinferencejobresponse) MarshalJSON() ([]byte, error) {
 		
 		Direction *string `json:"direction,omitempty"`
 		
+		Preview *bool `json:"preview,omitempty"`
+		
 		SelfUri *string `json:"selfUri,omitempty"`
 		Alias
 	}{ 
@@ -188,6 +193,8 @@ func (o Checklistinferencejobresponse) MarshalJSON() ([]byte, error) {
 		MediaType: o.MediaType,
 		
 		Direction: o.Direction,
+		
+		Preview: o.Preview,
 		
 		SelfUri: o.SelfUri,
 		Alias:    (Alias)(o),
@@ -255,6 +262,10 @@ func (o *Checklistinferencejobresponse) UnmarshalJSON(b []byte) error {
     
 	if Direction, ok := ChecklistinferencejobresponseMap["direction"].(string); ok {
 		o.Direction = &Direction
+	}
+    
+	if Preview, ok := ChecklistinferencejobresponseMap["preview"].(bool); ok {
+		o.Preview = &Preview
 	}
     
 	if SelfUri, ok := ChecklistinferencejobresponseMap["selfUri"].(string); ok {

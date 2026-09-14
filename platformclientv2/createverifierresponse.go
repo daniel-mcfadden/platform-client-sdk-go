@@ -26,6 +26,9 @@ type Createverifierresponse struct {
 	// KeyUri - The key URI for TOTP authenticator app registration.
 	KeyUri *string `json:"keyUri,omitempty"`
 
+	// EncodedQuickResponseCode - Base64-encoded PNG of the TOTP registration QR code.
+	EncodedQuickResponseCode *string `json:"encodedQuickResponseCode,omitempty"`
+
 	// VarDefault - Indicates whether this is the default verifier.
 	VarDefault *bool `json:"default,omitempty"`
 }
@@ -103,6 +106,8 @@ func (o Createverifierresponse) MarshalJSON() ([]byte, error) {
 		
 		KeyUri *string `json:"keyUri,omitempty"`
 		
+		EncodedQuickResponseCode *string `json:"encodedQuickResponseCode,omitempty"`
+		
 		VarDefault *bool `json:"default,omitempty"`
 		Alias
 	}{ 
@@ -115,6 +120,8 @@ func (o Createverifierresponse) MarshalJSON() ([]byte, error) {
 		Enabled: o.Enabled,
 		
 		KeyUri: o.KeyUri,
+		
+		EncodedQuickResponseCode: o.EncodedQuickResponseCode,
 		
 		VarDefault: o.VarDefault,
 		Alias:    (Alias)(o),
@@ -146,6 +153,10 @@ func (o *Createverifierresponse) UnmarshalJSON(b []byte) error {
     
 	if KeyUri, ok := CreateverifierresponseMap["keyUri"].(string); ok {
 		o.KeyUri = &KeyUri
+	}
+    
+	if EncodedQuickResponseCode, ok := CreateverifierresponseMap["encodedQuickResponseCode"].(string); ok {
+		o.EncodedQuickResponseCode = &EncodedQuickResponseCode
 	}
     
 	if VarDefault, ok := CreateverifierresponseMap["default"].(bool); ok {

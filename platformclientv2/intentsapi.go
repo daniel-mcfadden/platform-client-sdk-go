@@ -1394,8 +1394,6 @@ func (a IntentsApi) PostIntentsCustomerintents(body Customerintent) (*Customerin
 // PostIntentsCustomerintentsBulkRetrieve invokes POST /api/v2/intents/customerintents/bulk/retrieve
 //
 // Get customer intents by IDs
-//
-// Preview: PostIntentsCustomerintentsBulkRetrieve is a preview method and is subject to both breaking and non-breaking changes at any time without notice
 func (a IntentsApi) PostIntentsCustomerintentsBulkRetrieve(body Batchgetcustomerintentsrequest) ([]Customerintentresponse, *APIResponse, error) {
 	var httpMethod = "POST"
 	// create path and map variables
