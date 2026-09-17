@@ -33260,9 +33260,9 @@
                 }, 
                 {
                     "name": "ColumnDataType",
-                    "description": "The data type of the column selected for dynamic queueing (TEXT, NUMERIC or TIMESTAMP)",
+                    "description": "The data type of the column selected for dynamic queueing (TEXT, NUMERIC, TIMESTAMP, DATETIME)",
                     "dataType": "string",
-                    "enum": ["NUMERIC", "TEXT", "TIMESTAMP"]
+                    "enum": ["NUMERIC", "TEXT", "TIMESTAMP", "DATETIME"]
                 }, 
                 {
                     "name": "Min",
